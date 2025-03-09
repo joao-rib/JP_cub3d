@@ -17,13 +17,13 @@ int	main(int argc, char **argv)
 	t_game	g;
 
 	if (argc != 2)
-		return (error_msg("Insert one argument only"));
+		return (ft_error_msg("Insert one argument only"));
 	if (ft_strlen(argv[1]) < 4
 		|| !ft_strnstr(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
-		return (error_msg("Argument must be a .cub file"));
+		return (ft_error_msg("Argument must be a .cub file"));
 	g.map->map_on_file = 0;
 	load_map(&g, argv[1]);
-	//validate map
+	validate_map(&g);
 	// load everything else
 	// initialise some variables
 	// run game

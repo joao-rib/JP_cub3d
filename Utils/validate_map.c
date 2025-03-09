@@ -116,21 +116,18 @@ static bool	validate_walls(char **layout, t_point size)
 		row++;
 	}
 	return (true);
-}
+}*/
 
 void	validate_map(t_game *g)
 {
-	g->map->num_coins = 0;
-	g->coins = 0;
-	if (g->map->map_size.x == 0 || g->map->map_size.y == 0)
+	if (g->map->map_size.y == 0)
 		error_map("Map is empty", g);
-	if (!validate_walls(g->map->layout, g->map->map_size))
+	if (!validate_walls(g->map->layout, g->map->map_size)) // WIP reescrever, mapa não é quadrado
 		error_map("Map is not walled", g);
-	if (!validate_ends(g->map->layout, g->map->map_size))
+	if (!validate_ends(g->map->layout, g->map->map_size)) // WIP reescrever, não precisa de exits
 		error_map("Map must have one player and one exit", g);
-	if (!validate_chars(g))
+	if (!validate_chars(g)) // WIP reverificar, player tem de ser único
 		error_map("Map has unknown entities", g);
-	if (!validate_path(g))
-		error_map("Map cannot be cleared", g);
-	g->coins = 0;
-}*/
+	//if (!validate_path(g))
+	//	error_map("Map cannot be cleared", g);
+}
