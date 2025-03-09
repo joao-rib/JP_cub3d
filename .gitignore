@@ -1,0 +1,14 @@
+.vscode/
+*obj/
+*.o
+*.a
+*.pdf
+*wip*
+README.md
+README.c
+a.out
+cub3d
+*so_long/*
+*.DS_Store*
+*.txt
+*.nfs*
