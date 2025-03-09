@@ -33,9 +33,9 @@
 		free(n);
 		i++;
 	}
-}
+}*/
 
-void	load_graphics(t_game *g)
+/*void	load_graphics(t_game *g)
 {
 	int	width;
 	int	height;
@@ -48,9 +48,9 @@ void	load_graphics(t_game *g)
 	g->display.win = mlx_new_window(g->display.mlx, width, height, "so_long");
 	if (!g->display.win)
 		error_exit("Window allocation error", g);
-}
+}*/
 
-static int	count_rows(char *file)
+static int	count_rows(char *file, t_game *g)
 {
 	char	*line;
 	int		fd;
@@ -60,13 +60,16 @@ static int	count_rows(char *file)
 	i = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		error_msg("Cannot open .ber file");
+		error_msg("Cannot open .cub file");
 	while (line)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		i++;
+		else if (line[0] == '\n') // WIP also check first two letters for "NO" "SO" "EA" "WE" "F " "C "
+			g->map->map_on_file++;
+		else
+			i++;
 		free(line);
 	}
 	close(fd);
@@ -78,7 +81,7 @@ static void	map_mem(t_game *g, char *file)
 	g->map = (t_map *)malloc(sizeof(t_map));
 	if (!g->map)
 		error_map("Map allocation error", g);
-	g->map->map_size.y = count_rows(file);
+	g->map->map_size.y = count_rows(file, g);
 	g->map->layout = (char **)ft_calloc(g->map->map_size.y + 1, sizeof(char *));
 	if (!g->map->layout)
 		error_map("Map layout error", g);
@@ -91,24 +94,30 @@ void	load_map(t_game *g, char *file)
 	int		i;
 
 	map_mem(g, file);
-	i = -1;
+	i = g->map->map_on_file * (-1);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		error_map("Cannot open .ber file", g);
+		error_map("Cannot open .cub file", g);
 	while (++i < g->map->map_size.y)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		g->map->layout[i] = ft_strtrim(line, "\n");
-		if (!g->map->layout[i])
-			error_map("Map layout error", g);
-		if (i == 0)
-			g->map->map_size.x = (int)ft_strlen(g->map->layout[i]);
-		else if ((int)ft_strlen(g->map->layout[i]) != g->map->map_size.x)
-			error_map("Map is not rectangular", g);
-		free(line);
+		else if (i < 0)
+			free(line);
+		else
+		{
+			g->map->layout[i] = ft_strtrim(line, "\n");
+			if (!g->map->layout[i])
+				error_map("Map layout error", g);
+			//if (i == 0)
+			//	g->map->map_size.x = (int)ft_strlen(g->map->layout[i]);
+			//else if ((int)ft_strlen(g->map->layout[i]) != g->map->map_size.x)
+			//	error_map("Map is not rectangular", g);
+			free(line);
+		}
 	}
 	g->map->layout[i] = NULL;
 	close(fd);
-}*/
+}
+

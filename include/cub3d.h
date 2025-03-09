@@ -21,7 +21,7 @@
 # include <math.h>
 # include "../libft/libft.h"
 # include "../mlx/minilibx-linux/mlx.h"
-/*
+
 typedef struct s_point
 {
 	int	x;
@@ -31,39 +31,40 @@ typedef struct s_point
 typedef struct s_map
 {
 	char			**layout;
-	int				num_coins;
+	int				map_on_file;
+//	int				num_coins;
 	struct s_point	map_size;
-	struct s_point	pos_exit;
-	struct s_point	pos_player;
+//	struct s_point	pos_exit;
+//	struct s_point	pos_player;
 }			t_map;
 
-typedef struct s_sprite
+/*typedef struct s_sprite
 {
 	int		width;
 	int		height;
 	void	*img;
-}			t_sprite;
+}			t_sprite;*/
 
-typedef struct s_graph
+/*typedef struct s_graph
 {
 	void	*mlx;
 	void	*win;
-}			t_graph;
+}			t_graph;*/
 
 typedef struct s_game
 {
 	struct s_map	*map;
-	struct s_sprite	*sprite;
-	struct s_graph	display;
-	struct s_point	curr;
-	struct s_point	next;
-	int				moves;
-	int				coins;
-	int				nsprites;
-	int				textpos_y;
+//	struct s_sprite	*sprite;
+//	struct s_graph	display;
+//	struct s_point	curr;
+//	struct s_point	next;
+//	int				moves;
+//	int				coins;
+//	int				nsprites;
+//	int				textpos_y;
 }			t_game;
 
-//Utils - Error Handling
+/*//Utils - Error Handling
 int		error_msg(char *msg);
 void	error_exit(char *msg, t_game *g);
 void	error_map(char *msg, t_game *g);

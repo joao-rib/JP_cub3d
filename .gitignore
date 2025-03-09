@@ -9,6 +9,7 @@ README.c
 a.out
 cub3d
 *so_long/*
+*mlx/*
 *.DS_Store*
 *.txt
 *.nfs*
