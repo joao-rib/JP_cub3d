@@ -105,7 +105,7 @@ void	load_map(t_game *g, char *file)
 		if (!line)
 			break ;
 		else if (i < 0)
-			free(line); //WIP Acrescentar aqui algo que guarda paths e cores
+			free(line); //WIP Acrescentar aqui algo que guarda texturas e cores
 		else
 		{
 			g->map->layout[i] = ft_strtrim(line, "\n"); //WIP trim right... for spaces!

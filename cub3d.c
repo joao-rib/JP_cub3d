@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 	g.map->map_on_file = 0;
 	load_map(&g, argv[1]);
 	validate_map(&g);
-	// load everything else
+	// load everything else (Textures, Colours)
 	// initialise some variables
 	// run game
 	return (0);
