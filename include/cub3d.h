@@ -35,8 +35,10 @@ typedef struct s_map
 //	int				num_coins;
 	struct s_point	map_size;
 //	struct s_point	pos_exit;
-//	struct s_point	pos_player;
+	struct s_point	pos_player;
 }			t_map;
+
+//WIP Acrescentar uma estrutura para cores e outra para wallpapers
 
 /*typedef struct s_sprite
 {

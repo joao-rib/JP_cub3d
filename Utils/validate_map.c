@@ -38,7 +38,7 @@
 	}
 	free(buff);
 	return (resp);
-}
+}*/
 
 static bool	validate_chars(t_game *g)
 {
@@ -50,14 +50,14 @@ static bool	validate_chars(t_game *g)
 		pos.x = 1;
 		while (g->map->layout[pos.y][pos.x])
 		{
-			if (g->map->layout[pos.y][pos.x] == 'E')
-				g->map->pos_exit = pos;
-			else if (g->map->layout[pos.y][pos.x] == 'P')
-				g->map->pos_player = pos;
-			else if (g->map->layout[pos.y][pos.x] == 'C')
-				g->map->num_coins++;
-			else if (ft_strchr("01", g->map->layout[pos.y][pos.x]))
+			//if (g->map->layout[pos.y][pos.x] == 'E')
+			//	g->map->pos_exit = pos;
+			//else if (g->map->layout[pos.y][pos.x] == 'C')
+			//	g->map->num_coins++;
+			if (ft_strchr("01 ", g->map->layout[pos.y][pos.x]))
 				pos.x *= 1;
+			else if (ft_strchr("NSEW", g->map->layout[pos.y][pos.x]))
+				g->map->pos_player = pos;
 			else
 				return (false);
 			pos.x++;
@@ -67,14 +67,12 @@ static bool	validate_chars(t_game *g)
 	return (true);
 }
 
-static bool	validate_ends(char **layout, t_point size)
+static bool	validate_player(char **layout, t_point size)
 {
 	int	c;
 	int	r;
-	int	e;
 	int	p;
 
-	e = 0;
 	p = 0;
 	r = 1;
 	while (r < size.y)
@@ -82,52 +80,56 @@ static bool	validate_ends(char **layout, t_point size)
 		c = 1;
 		while (layout[r][c])
 		{
-			if (layout[r][c] == 'E')
-				e++;
-			else if (layout[r][c] == 'P')
+			if (ft_strchr("NSEW", layout[r][c]))
 				p++;
 			c++;
 		}
 		r++;
 	}
-	if (e == 1 && p == 1)
+	if (p == 1)
 		return (true);
 	else
 		return (false);
 }
 
-static bool	validate_walls(char **layout, t_point size)
+static bool	validate_walls1(char **layout, t_point size)
 {
 	int	col;
 	int	row;
 
 	col = 0;
 	row = 0;
-	while (col < size.x)
-	{
-		if (layout[0][col] != '1' || layout[size.y - 1][col] != '1')
-			return (false);
+	while (layout[0][col] && ft_strchr(" 1", layout[0][col]))
 		col++;
-	}
+	if (!layout[0][col])
+		return (false);
+	col = 0;
+	while (layout[size.y - 1][col] && ft_strchr(" 1", layout[size.y - 1][col]))
+		col++;
+	if (!layout[size.y - 1][col])
+		return (false);
 	while (row < size.y)
 	{
-		if (layout[row][0] != '1' || layout[row][size.x - 1] != '1')
+		size.x = (int)ft_strlen(layout[row]);
+		if (ft_strchr("1 ", layout[row][0]) || layout[row][size.x - 1] != '1')
 			return (false);
 		row++;
 	}
 	return (true);
-}*/
+}
 
 void	validate_map(t_game *g)
 {
 	if (g->map->map_size.y == 0)
 		error_map("Map is empty", g);
-	if (!validate_walls(g->map->layout, g->map->map_size)) // WIP reescrever, mapa não é quadrado
-		error_map("Map is not walled", g);
-	if (!validate_ends(g->map->layout, g->map->map_size)) // WIP reescrever, não precisa de exits
-		error_map("Map must have one player and one exit", g);
-	if (!validate_chars(g)) // WIP reverificar, player tem de ser único
+	if (!validate_player(g->map->layout, g->map->map_size))
+		error_map("Map must have one player", g);
+	if (!validate_chars(g))
 		error_map("Map has unknown entities", g);
+	if (!validate_walls1(g->map->layout, g->map->map_size))
+		error_map("Map is not walled", g);
+	if (!validate_walls2(g->map->layout, g->map->map_size)) // WIP procurar contactos com exterior
+		error_map("Map is not walled", g);
 	//if (!validate_path(g))
 	//	error_map("Map cannot be cleared", g);
 }

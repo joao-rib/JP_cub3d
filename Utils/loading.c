@@ -58,6 +58,7 @@ static int	count_rows(char *file, t_game *g)
 
 	line = "exist";
 	i = 0;
+	g->map->map_on_file = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		error_msg("Cannot open .cub file");
@@ -104,10 +105,10 @@ void	load_map(t_game *g, char *file)
 		if (!line)
 			break ;
 		else if (i < 0)
-			free(line);
+			free(line); //WIP Acrescentar aqui algo que guarda paths e cores
 		else
 		{
-			g->map->layout[i] = ft_strtrim(line, "\n");
+			g->map->layout[i] = ft_strtrim(line, "\n"); //WIP trim right... for spaces!
 			if (!g->map->layout[i])
 				error_map("Map layout error", g);
 			//if (i == 0)

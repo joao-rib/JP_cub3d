@@ -15,7 +15,7 @@
 void	error_map(char *msg, t_game *g)
 {
 	ft_error_msg(msg);
-	if (g->map) // WIP pode ser necessário reescrever
+	if (g->map)
 		destroy_map(g);
 	exit(1);
 }

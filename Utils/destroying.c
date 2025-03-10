@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-/*void	destroy_map(t_game *g)
+void	destroy_map(t_game *g)
 {
 	if (!g->map)
 		return ;
@@ -26,7 +26,7 @@
 	free(g->map);
 }
 
-static void	destroy_sprites(t_game *g)
+/*static void	destroy_sprites(t_game *g)
 {
 	g->nsprites--;
 	while (g->nsprites >= 0)
