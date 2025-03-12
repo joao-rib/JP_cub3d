@@ -25,8 +25,8 @@ int	main(int argc, char **argv)
 	g.map->map_size.x = 0;
 	load_map(&g, argv[1]);
 	validate_map(&g);
-	// load everything else (Textures, Colours)
-	// initialise some variables
+	// load everything else
+	// initialise some variables?
 	// run game
 	return (0);
 }
