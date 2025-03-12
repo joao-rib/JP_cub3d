@@ -50,6 +50,25 @@
 		error_exit("Window allocation error", g);
 }*/
 
+static void load_texture(char *line, t_game *g, size_t l)
+{
+	if (l == 1)
+		;
+	else if (ft_strnstr(line, "NO ", 3))
+		g->texture.NO = ft_substr(line, 3, l - 4);
+	else if (ft_strnstr(line, "SO ", 3))
+		g->texture.SO = ft_substr(line, 3, l - 4);
+	else if (ft_strnstr(line, "WE ", 3))
+		g->texture.WE = ft_substr(line, 3, l - 4);
+	else if (ft_strnstr(line, "EA ", 3))
+		g->texture.EA = ft_substr(line, 3, l - 4);
+	else if (ft_strnstr(line, "F ", 2))
+		g->texture.EA = ft_substr(line, 2, l - 3);
+	else if (ft_strnstr(line, "C ", 2))
+		g->texture.EA = ft_substr(line, 2, l - 3);
+	free(line);
+}
+
 static int	count_rows(char *file, t_game *g)
 {
 	char	*line;
@@ -67,10 +86,15 @@ static int	count_rows(char *file, t_game *g)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		else if (line[0] == '\n') // WIP also check first two letters for "NO" "SO" "EA" "WE" "F " "C "
+		else if (line[0] == '\n' || ft_strnstr(line, "NO ", 3)
+				|| ft_strnstr(line, "SO ", 3) || ft_strnstr(line, "WE ", 3)
+				|| ft_strnstr(line, "EA ", 3) || ft_strnstr(line, "F ", 2)
+				|| ft_strnstr(line, "C ", 2)) // WIP Se for tema para norminette, passar para função
 			g->map->map_on_file++;
 		else
 			i++;
+		if (i > 0 && (int)ft_strlen(line) > g->map->map_size.x)
+			g->map->map_size.x = (int)ft_strlen(line);
 		free(line);
 	}
 	close(fd);
@@ -105,10 +129,10 @@ void	load_map(t_game *g, char *file)
 		if (!line)
 			break ;
 		else if (i < 0)
-			free(line); //WIP Acrescentar aqui algo que guarda texturas e cores
+			load_texture(g, line, ft_strlen(line));
 		else
 		{
-			g->map->layout[i] = ft_strtrim(line, "\n"); //WIP trim right... for spaces!
+			g->map->layout[i] = ft_strtrim(line, "\n"); //WIP add spaces in accordance with g->map->map_size.x
 			if (!g->map->layout[i])
 				error_map("Map layout error", g);
 			//if (i == 0)

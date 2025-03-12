@@ -22,6 +22,7 @@ int	main(int argc, char **argv)
 		|| !ft_strnstr(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
 		return (ft_error_msg("Argument must be a .cub file"));
 	g.map->map_on_file = 0;
+	g.map->map_size.x = 0;
 	load_map(&g, argv[1]);
 	validate_map(&g);
 	// load everything else (Textures, Colours)

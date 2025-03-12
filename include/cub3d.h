@@ -38,7 +38,15 @@ typedef struct s_map
 	struct s_point	pos_player;
 }			t_map;
 
-//WIP Acrescentar uma estrutura para cores e outra para wallpapers
+typedef struct s_texture
+{
+	char	*ceiling;
+	char	*floor;
+	char	*NO;
+	char	*SO;
+	char	*WE;
+	char	*EA;
+}			t_texture;
 
 /*typedef struct s_sprite
 {
@@ -55,7 +63,8 @@ typedef struct s_map
 
 typedef struct s_game
 {
-	struct s_map	*map;
+	struct s_map		*map;
+	struct s_texture	texture;
 //	struct s_sprite	*sprite;
 //	struct s_graph	display;
 //	struct s_point	curr;
