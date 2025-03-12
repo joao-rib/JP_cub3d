@@ -89,7 +89,7 @@ static int	count_rows(char *file, t_game *g)
 		else if (line[0] == '\n' || ft_strnstr(line, "NO ", 3)
 				|| ft_strnstr(line, "SO ", 3) || ft_strnstr(line, "WE ", 3)
 				|| ft_strnstr(line, "EA ", 3) || ft_strnstr(line, "F ", 2)
-				|| ft_strnstr(line, "C ", 2)) // WIP Se for tema para norminette, passar para função
+				|| ft_strnstr(line, "C ", 2)) // WIP Se for tema para norminette, passar para função //WIP também quando for só whitespaces... antes do layout
 			g->map->map_on_file++;
 		else
 			i++;
@@ -133,7 +133,7 @@ void	load_map(t_game *g, char *file)
 		else
 		{
 			g->map->layout[i] = ft_strtrim(line, "\n");
-			if (!g->map->layout[i])
+			if (!g->map->layout[i] || !g->map->layout[i][0])
 				error_map("Map layout error", g);
 			if (ft_strlen(g->map->layout[i]) < g->map->map_size.x)
 				fill_with_spaces(g, i); // WIP escrever função
