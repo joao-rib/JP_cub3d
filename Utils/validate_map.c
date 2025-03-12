@@ -18,7 +18,7 @@ static bool	validate_walls2(char **layout, t_point size)
 	int		j;
 
 	i = 0;
-	while (layout[i])
+	while (layout[i]) // WIP Mudar este, talvez
 	{
 		j = 1;
 		while (layout[i][j]) // WIP faltam diagonais?

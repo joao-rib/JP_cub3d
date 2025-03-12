@@ -132,13 +132,11 @@ void	load_map(t_game *g, char *file)
 			load_texture(g, line, ft_strlen(line));
 		else
 		{
-			g->map->layout[i] = ft_strtrim(line, "\n"); //WIP add spaces in accordance with g->map->map_size.x
+			g->map->layout[i] = ft_strtrim(line, "\n");
 			if (!g->map->layout[i])
 				error_map("Map layout error", g);
-			//if (i == 0)
-			//	g->map->map_size.x = (int)ft_strlen(g->map->layout[i]);
-			//else if ((int)ft_strlen(g->map->layout[i]) != g->map->map_size.x)
-			//	error_map("Map is not rectangular", g);
+			if (ft_strlen(g->map->layout[i]) < g->map->map_size.x)
+				fill_with_spaces(g, i); // WIP escrever função
 			free(line);
 		}
 	}
