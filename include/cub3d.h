@@ -76,8 +76,8 @@ typedef struct s_game
 }			t_game;
 
 //Utils - Error Handling
-void	error_exit(char *msg, t_game *g); // WIP pode ser necessário reescrever
-void	error_map(char *msg, t_game *g); // WIP pode ser necessário reescrever
+void	error_exit(char *msg, t_game *g);
+void	error_map(char *msg, t_game *g);
 //Utils - Loading
 void	load_map(t_game *g, char *file);
 //void	load_graphics(t_game *g);
@@ -89,8 +89,8 @@ void	load_map(t_game *g, char *file);
 //int		move_handler(int keypress, t_game *g);
 //void	move_player(t_game *g);
 //Utils - Destroying
-void	destroy_map(t_game *g); // WIP pode ser necessário reescrever
-int		destroy_game(t_game *game);  // WIP pode ser necessário reescrever
+void	destroy_map(t_game *g);
+int		destroy_game(t_game *game);
 //Utils - Other
 void	validate_map(t_game *g);
 

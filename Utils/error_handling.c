@@ -20,9 +20,9 @@ void	error_map(char *msg, t_game *g)
 	exit(1);
 }
 
-/*void	error_exit(char *msg, t_game *g)
+void	error_exit(char *msg, t_game *g)
 {
 	ft_error_msg(msg);
-	destroy_game(g); // WIP pode ser necessário reescrever
+	destroy_game(g);
 	exit(1);
-}*/
+}
