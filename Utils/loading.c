@@ -58,7 +58,7 @@ static int	count_rows(char *file, t_game *g)
 	g->map->map_on_file = 1;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		ft_error_msg("Cannot open .cub file");
+		error_exit("Cannot open .cub file", g);
 	while (line)
 	{
 		line = get_next_line(fd);
