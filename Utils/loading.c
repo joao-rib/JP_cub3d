@@ -41,9 +41,9 @@ static void load_texture(t_game *g, char *line, size_t l)
 	else if (ft_strnstr(line, "EA ", 3))
 		g->texture.EA = ft_substr(line, 3, l - 4);
 	else if (ft_strnstr(line, "F ", 2))
-		g->texture.EA = ft_substr(line, 2, l - 3);
+		g->texture.floor = ft_substr(line, 2, l - 3);
 	else if (ft_strnstr(line, "C ", 2))
-		g->texture.EA = ft_substr(line, 2, l - 3);
+		g->texture.ceiling = ft_substr(line, 2, l - 3);
 	free(line);
 }
 
@@ -71,8 +71,8 @@ static int	count_rows(char *file, t_game *g)
 			g->map->map_on_file++;
 		else
 			i++;
-		if (i > 0 && (int)ft_strlen(line) > g->map->map_size.x)
-			g->map->map_size.x = (int)ft_strlen(line);
+		if (i > 0 && (int)ft_strlen(line) > (g->map->map_size.x + 1))
+			g->map->map_size.x = (int)ft_strlen(line) - 1;
 		free(line);
 	}
 	close(fd);

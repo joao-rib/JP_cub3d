@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (g.map->layout[i])
 	{
-		ft_printf("%s\n", g.map->layout[i]);
+		ft_printf("%s$\n", g.map->layout[i]);
 		i++;
 	}
 	// load everything else

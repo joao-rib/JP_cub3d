@@ -46,17 +46,16 @@ static bool	validate_walls1(char **layout, t_point size)
 	row = 0;
 	while (layout[0][col] && ft_strchr(" 1", layout[0][col]))
 		col++;
-	if (!layout[0][col])
+	if (layout[0][col])
 		return (false);
 	col = 0;
 	while (layout[size.y - 1][col] && ft_strchr(" 1", layout[size.y - 1][col]))
 		col++;
-	if (!layout[size.y - 1][col])
+	if (layout[size.y - 1][col])
 		return (false);
 	while (row < size.y)
 	{
-		size.x = (int)ft_strlen(layout[row]);
-		if (ft_strchr("1 ", layout[row][0]) || layout[row][size.x - 1] != '1')
+		if (!ft_strchr("1 ", layout[row][0]) || !ft_strchr(" 1", layout[row][size.x - 1]))
 			return (false);
 		row++;
 	}
