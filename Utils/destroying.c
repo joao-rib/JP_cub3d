@@ -12,6 +12,22 @@
 
 #include "../include/cub3d.h"
 
+static void	destroy_textures(t_game *g)
+{
+	if (g->texture.ceiling)
+		free(g->texture.ceiling);
+	if (g->texture.floor)
+		free(g->texture.floor);
+	if (g->texture.NO)
+		free(g->texture.NO);
+	if (g->texture.SO)
+		free(g->texture.SO);
+	if (g->texture.WE)
+		free(g->texture.WE);
+	if (g->texture.EA)
+		free(g->texture.EA);
+}
+
 void	destroy_map(t_game *g)
 {
 	if (!g->map)
@@ -24,6 +40,7 @@ void	destroy_map(t_game *g)
 	}
 	free(g->map->layout);
 	free(g->map);
+	destroy_textures(g);
 }
 
 /*static void	destroy_sprites(t_game *g)
