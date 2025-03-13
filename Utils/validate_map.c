@@ -124,4 +124,5 @@ void	validate_map(t_game *g)
 		error_map("Map is not walled", g);
 	if (!validate_walls2(g->map->layout, g->map->map_size))
 		error_map("Map is not walled", g);
+	// WIP splitmap?
 }
