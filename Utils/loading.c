@@ -12,45 +12,23 @@
 
 #include "../include/cub3d.h"
 
-/*void	load_sprites(t_game *g, int nsprites)
+static void	fill_with_spaces(t_game *g, int i)
 {
-	int		i;
-	char	*n;
-	char	*filename;
+	int		extra_len;
+	char	*temp;
 
-	i = 0;
-	g->sprite = ft_calloc(nsprites, sizeof(t_sprite));
-	if (!g->sprite)
-		error_exit("Sprite allocation error", g);
-	while (i < nsprites)
-	{
-		n = ft_itoa(i);
-		filename = ft_strjoin("Sprites/img", n);
-		filename = ft_strbuild(filename, ".xpm");
-		g->sprite[i].img = mlx_xpm_file_to_image(g->display.mlx, filename,
-				&(g->sprite[i].width), &(g->sprite[i].height));
-		free(filename);
-		free(n);
-		i++;
-	}
-}*/
+	extra_len = g->map->map_size.x - ft_strlen(g->map->layout[i]);
+	if (extra_len <= 0)
+		return ;
+	temp = ft_calloc(extra_len + 1, sizeof(char));
+	if (!temp)
+		return (error_map("Map allocation error", g));
+	temp = ft_memset(temp, ' ', extra_len);
+	g->map->layout[i] = ft_strbuild(g->map->layout[i], temp);
+	free(temp);
+}
 
-/*void	load_graphics(t_game *g)
-{
-	int	width;
-	int	height;
-
-	width = g->map->map_size.x * 32;
-	height = g->map->map_size.y * 32;
-	g->display.mlx = mlx_init();
-	if (!g->display.mlx)
-		error_exit("Display allocation error", g);
-	g->display.win = mlx_new_window(g->display.mlx, width, height, "so_long");
-	if (!g->display.win)
-		error_exit("Window allocation error", g);
-}*/
-
-static void load_texture(char *line, t_game *g, size_t l)
+static void load_texture(t_game *g, char *line, size_t l)
 {
 	if (l == 1)
 		;
@@ -80,7 +58,7 @@ static int	count_rows(char *file, t_game *g)
 	g->map->map_on_file = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		error_msg("Cannot open .cub file");
+		ft_error_msg("Cannot open .cub file");
 	while (line)
 	{
 		line = get_next_line(fd);
@@ -135,8 +113,8 @@ void	load_map(t_game *g, char *file)
 			g->map->layout[i] = ft_strtrim(line, "\n");
 			if (!g->map->layout[i] || !g->map->layout[i][0])
 				error_map("Map layout error", g);
-			if (ft_strlen(g->map->layout[i]) < g->map->map_size.x)
-				fill_with_spaces(g, i); // WIP escrever função
+			if ((int)ft_strlen(g->map->layout[i]) < g->map->map_size.x)
+				fill_with_spaces(g, i);
 			free(line);
 		}
 	}

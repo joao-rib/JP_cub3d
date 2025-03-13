@@ -17,19 +17,18 @@ static bool	validate_walls2(char **layout, t_point size)
 	int		i;
 	int		j;
 
-	i = 0;
-	while (layout[i]) // WIP Mudar este, talvez
+	i = 1;
+	while (i < (size.y - 1))
 	{
 		j = 1;
-		while (layout[i][j]) // WIP faltam diagonais?
+		while (j < (size.x - 1))
 		{
 			if (!ft_strchr("0NSWE", layout[i][j]))
 				;
-			else if (layout[i][j - 1] == ' ' || layout[i][j + 1] == ' ')
-				return (false);
-			else if (i != 0 && layout[i - 1][j] == ' ') // WIP pode dar treta
-				return (false);
-			else if (i != (size.y - 1) && layout[i + 1][j] == ' ') // WIP pode dar treta
+			else if (layout[i][j - 1] == ' ' || layout[i][j + 1] == ' '
+					|| layout[i - 1][j] == ' ' || layout[i + 1][j] == ' '
+					|| layout[i + 1][j - 1] == ' ' || layout[i + 1][j + 1] == ' '
+					|| layout[i - 1][j - 1] == ' ' || layout[i - 1][j + 1] == ' ')
 				return (false);
 			j++;
 		}

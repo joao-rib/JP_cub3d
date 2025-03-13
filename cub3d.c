@@ -15,16 +15,27 @@
 int	main(int argc, char **argv)
 {
 	t_game	g;
+	int		i;
 
 	if (argc != 2)
 		return (ft_error_msg("Insert one argument only"));
 	if (ft_strlen(argv[1]) < 4
 		|| !ft_strnstr(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
 		return (ft_error_msg("Argument must be a .cub file"));
-	g.map->map_on_file = 0;
-	g.map->map_size.x = 0;
+	g.map->map_on_file = 0; // WIP Inicialisar noutro sítio
+	g.map->map_size.x = 0; // WIP Inicialisar noutro sítio
+	ft_printf("Test0\n");
 	load_map(&g, argv[1]);
+	ft_printf("Test1\n");
 	validate_map(&g);
+	ft_printf("Floor: %s\nCeiling: %s\n", g.texture.floor, g.texture.ceiling);
+	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", g.texture.NO, g.texture.SO, g.texture.WE, g.texture.EA);
+	i = 0;
+	while (g.map->layout[i])
+	{
+		ft_printf("%s\n", g.map->layout[i]);
+		i++;
+	}
 	// load everything else
 	// initialise some variables?
 	// run game
