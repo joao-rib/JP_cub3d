@@ -57,6 +57,8 @@ static bool	validate_walls1(char **layout, t_point size)
 	{
 		if (!ft_strchr("1 ", layout[row][0]) || !ft_strchr(" 1", layout[row][size.x - 1]))
 			return (false);
+		if (ft_isemptystr(layout[row]))
+			return (false);
 		row++;
 	}
 	return (true);

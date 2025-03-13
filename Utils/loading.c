@@ -64,10 +64,10 @@ static int	count_rows(char *file, t_game *g)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		else if (line[0] == '\n' || ft_strnstr(line, "NO ", 3)
+		else if (i == 0 && (ft_isemptystr(line) || ft_strnstr(line, "NO ", 3)
 				|| ft_strnstr(line, "SO ", 3) || ft_strnstr(line, "WE ", 3)
 				|| ft_strnstr(line, "EA ", 3) || ft_strnstr(line, "F ", 2)
-				|| ft_strnstr(line, "C ", 2)) // WIP Se for tema para norminette, passar para função //WIP também quando for só whitespaces... antes do layout
+				|| ft_strnstr(line, "C ", 2))) // WIP Se for tema para norminette, passar para função
 			g->map->map_on_file++;
 		else
 			i++;
