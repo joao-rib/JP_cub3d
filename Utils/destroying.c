@@ -52,21 +52,21 @@ void	destroy_map(t_game *g)
 		g->nsprites--;
 	}
 	free(g->sprite);
-}
+}*/
 
 int	destroy_game(t_game *g)
 {
 	if (!g)
 		return (1);
-	if (g->sprite)
-		destroy_sprites(g);
-	if (g->display.win)
-		mlx_destroy_window(g->display.mlx, g->display.win);
-	if (g->display.mlx)
-		mlx_destroy_display(g->display.mlx);
+	//if (g->sprite)
+	//	destroy_sprites(g);
+	//if (g->display.win)
+	//	mlx_destroy_window(g->display.mlx, g->display.win);
+	//if (g->display.mlx)
+	//	mlx_destroy_display(g->display.mlx);
 	if (g->map)
 		destroy_map(g);
-	free(g->display.mlx);
+	//free(g->display.mlx);
 	exit(1);
 	return (1);
-}*/
+}

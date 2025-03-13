@@ -33,10 +33,10 @@ int	main(int argc, char **argv)
 		ft_printf("%s$\n", g.map->layout[i]);
 		i++;
 	}
-	destroy_map(&g);
 	// load everything else
 	// initialise some variables?
 	// run game
+	destroy_game(&g);
 	return (0);
 }
 
