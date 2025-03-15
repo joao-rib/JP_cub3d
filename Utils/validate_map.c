@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/10 15:53:45 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:41:54 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ static bool	validate_walls2(char **layout, t_point size)
 			if (!ft_strchr("0NSWE", layout[i][j]))
 				;
 			else if (layout[i][j - 1] == ' ' || layout[i][j + 1] == ' '
-					|| layout[i - 1][j] == ' ' || layout[i + 1][j] == ' '
-					|| layout[i + 1][j - 1] == ' ' || layout[i + 1][j + 1] == ' '
-					|| layout[i - 1][j - 1] == ' ' || layout[i - 1][j + 1] == ' ')
+					|| layout[i - 1][j] == ' ' || layout[i + 1][j] == ' ')
+				return (false);
+			else if (layout[i + 1][j - 1] == ' ' || layout[i + 1][j + 1] == ' ')
+				return (false);
+			else if (layout[i - 1][j - 1] == ' ' || layout[i - 1][j + 1] == ' ')
 				return (false);
 			j++;
 		}
@@ -55,9 +57,8 @@ static bool	validate_walls1(char **layout, t_point size)
 		return (false);
 	while (row < size.y)
 	{
-		if (!ft_strchr("1 ", layout[row][0]) || !ft_strchr(" 1", layout[row][size.x - 1]))
-			return (false);
-		if (ft_isemptystr(layout[row]))
+		if (!ft_strchr("1 ", layout[row][0])
+			|| !ft_strchr(" 1", layout[row][size.x - 1]))
 			return (false);
 		row++;
 	}
@@ -124,5 +125,6 @@ void	validate_map(t_game *g)
 		error_map("Map is not walled", g);
 	if (!validate_walls2(g->map->layout, g->map->map_size))
 		error_map("Map is not walled", g);
-	// WIP splitmap?
+	if (!flood_fill_cub3d(ft_matrix_dup(g->map->layout), g, g->map->pos_player))
+		error_map("Map is not contiguous", g);
 }

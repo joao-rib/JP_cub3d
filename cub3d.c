@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/11 13:13:36 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:07:56 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/cub3d.h"
+
+static void default_colours(t_game *g)
+{
+	if (!g->texture.ceiling)
+		g->texture.ceiling = ft_strdup("17,17,132");
+	if (!g->texture.floor)
+		g->texture.floor = ft_strdup("237,232,208");
+}
 
 int	main(int argc, char **argv)
 {
@@ -24,6 +32,7 @@ int	main(int argc, char **argv)
 		return (ft_error_msg("Argument must be a .cub file"));
 	ft_bzero(&g, sizeof (t_game));
 	load_map(&g, argv[1]);
+	default_colours(&g);
 	validate_map(&g);
 	ft_printf("Floor: %s\nCeiling: %s\n", g.texture.floor, g.texture.ceiling);
 	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", g.texture.NO, g.texture.SO, g.texture.WE, g.texture.EA);

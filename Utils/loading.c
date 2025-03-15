@@ -6,29 +6,36 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/11 13:23:46 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 14:55:25 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void	fill_with_spaces(t_game *g, int i)
+static void	load_into_layout(t_game *g, int i, char *line)
 {
 	int		extra_len;
 	char	*temp;
 
+	g->map->layout[i] = ft_strtrim(line, "\n");
+	if (!g->map->layout[i] || !g->map->layout[i][0])
+		error_map("Map layout error", g);
 	extra_len = g->map->map_size.x - ft_strlen(g->map->layout[i]);
 	if (extra_len <= 0)
-		return ;
+		return (free(line));
 	temp = ft_calloc(extra_len + 1, sizeof(char));
 	if (!temp)
+	{
+		free(line);
 		return (error_map("Map allocation error", g));
+	}
 	temp = ft_memset(temp, ' ', extra_len);
 	g->map->layout[i] = ft_strbuild(g->map->layout[i], temp);
 	free(temp);
+	free(line);
 }
 
-static void load_texture(t_game *g, char *line, size_t l)
+static void	load_texture(t_game *g, char *line, size_t l)
 {
 	if (l == 1)
 		;
@@ -47,15 +54,12 @@ static void load_texture(t_game *g, char *line, size_t l)
 	free(line);
 }
 
-static int	count_rows(char *file, t_game *g)
+static int	count_rows(char *file, t_game *g, char *line)
 {
-	char	*line;
 	int		fd;
 	int		i;
 
-	line = "exist";
 	i = 0;
-	g->map->map_on_file = 1;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		error_exit("Cannot open .cub file", g);
@@ -67,7 +71,7 @@ static int	count_rows(char *file, t_game *g)
 		else if (i == 0 && (ft_isemptystr(line) || ft_strnstr(line, "NO ", 3)
 				|| ft_strnstr(line, "SO ", 3) || ft_strnstr(line, "WE ", 3)
 				|| ft_strnstr(line, "EA ", 3) || ft_strnstr(line, "F ", 2)
-				|| ft_strnstr(line, "C ", 2))) // WIP Se for tema para norminette, passar para função
+				|| ft_strnstr(line, "C ", 2)))
 			g->map->map_on_file++;
 		else
 			i++;
@@ -84,7 +88,8 @@ static void	map_mem(t_game *g, char *file)
 	g->map = (t_map *)malloc(sizeof(t_map));
 	if (!g->map)
 		error_map("Map allocation error", g);
-	g->map->map_size.y = count_rows(file, g);
+	g->map->map_on_file = 1;
+	g->map->map_size.y = count_rows(file, g, "temp");
 	g->map->layout = (char **)ft_calloc(g->map->map_size.y + 1, sizeof(char *));
 	if (!g->map->layout)
 		error_map("Map layout error", g);
@@ -109,16 +114,8 @@ void	load_map(t_game *g, char *file)
 		else if (i < 0)
 			load_texture(g, line, ft_strlen(line));
 		else
-		{
-			g->map->layout[i] = ft_strtrim(line, "\n");
-			if (!g->map->layout[i] || !g->map->layout[i][0])
-				error_map("Map layout error", g);
-			if ((int)ft_strlen(g->map->layout[i]) < g->map->map_size.x)
-				fill_with_spaces(g, i);
-			free(line);
-		}
+			load_into_layout(g, i, line);
 	}
 	g->map->layout[i] = NULL;
 	close(fd);
 }
-
