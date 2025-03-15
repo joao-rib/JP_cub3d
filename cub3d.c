@@ -6,13 +6,13 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 15:07:56 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:36:28 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/cub3d.h"
 
-static void default_colours(t_game *g)
+static void	default_colours(t_game *g)
 {
 	if (!g->texture.ceiling)
 		g->texture.ceiling = ft_strdup("17,17,132");

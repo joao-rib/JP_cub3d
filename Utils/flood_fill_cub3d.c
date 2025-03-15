@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 16:04:57 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:37:20 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	water_near(char **tab, t_point pos, t_point size)
 
 static int	check_flood(char **tab, t_point pos, t_game *g)
 {
-	if (ft_strchr("01", tab[pos.y][pos.x]) && water_near(tab, pos, g->map->map_size))
+	if (ft_strchr("01", tab[pos.y][pos.x])
+		&& water_near(tab, pos, g->map->map_size))
 	{
 		tab[pos.y][pos.x] = 'F';
 		return (1);
