@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 15:27:54 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:53:15 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ void	destroy_map(t_game *g);
 int		destroy_game(t_game *game);
 //Utils - Other
 void	validate_map(t_game *g);
-int	flood_fill_cub3d(char **tab, t_game *g, t_point begin);
+int		flood_fill_cub3d(char **tab, t_game *g, t_point begin);
 
 #endif
