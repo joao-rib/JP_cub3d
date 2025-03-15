@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 15:42:22 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:04:57 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ int	flood_fill_cub3d(char **tab, t_game *g, t_point begin)
 		}
 	}
 	progress = validate_flood(tab, g->map->map_size);
-	free(tab);
+	ft_free_matrix(tab);
 	return (progress);
 }

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 14:55:25 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:22:05 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	load_into_layout(t_game *g, int i, char *line)
 	char	*temp;
 
 	g->map->layout[i] = ft_strtrim(line, "\n");
-	if (!g->map->layout[i] || !g->map->layout[i][0])
+	if (!g->map->layout[i])
 		error_map("Map layout error", g);
 	extra_len = g->map->map_size.x - ft_strlen(g->map->layout[i]);
 	if (extra_len <= 0)
@@ -89,6 +89,7 @@ static void	map_mem(t_game *g, char *file)
 	if (!g->map)
 		error_map("Map allocation error", g);
 	g->map->map_on_file = 1;
+	g->map->map_size.x = 0;
 	g->map->map_size.y = count_rows(file, g, "temp");
 	g->map->layout = (char **)ft_calloc(g->map->map_size.y + 1, sizeof(char *));
 	if (!g->map->layout)
