@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 16:36:28 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:21:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 	default_colours(&g);
 	validate_map(&g);
 	ft_printf("Floor: %s\nCeiling: %s\n", g.texture.floor, g.texture.ceiling);
-	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", g.texture.NO, g.texture.SO, g.texture.WE, g.texture.EA);
+	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", g.texture.north, g.texture.south, g.texture.west, g.texture.east);
 	i = 0;
 	while (g.map->layout[i])
 	{

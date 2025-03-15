@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 16:22:05 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:22:25 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ static void	load_texture(t_game *g, char *line, size_t l)
 	if (l == 1)
 		;
 	else if (ft_strnstr(line, "NO ", 3))
-		g->texture.NO = ft_substr(line, 3, l - 4);
+		g->texture.north = ft_substr(line, 3, l - 4);
 	else if (ft_strnstr(line, "SO ", 3))
-		g->texture.SO = ft_substr(line, 3, l - 4);
+		g->texture.south = ft_substr(line, 3, l - 4);
 	else if (ft_strnstr(line, "WE ", 3))
-		g->texture.WE = ft_substr(line, 3, l - 4);
+		g->texture.west = ft_substr(line, 3, l - 4);
 	else if (ft_strnstr(line, "EA ", 3))
-		g->texture.EA = ft_substr(line, 3, l - 4);
+		g->texture.east = ft_substr(line, 3, l - 4);
 	else if (ft_strnstr(line, "F ", 2))
 		g->texture.floor = ft_substr(line, 2, l - 3);
 	else if (ft_strnstr(line, "C ", 2))

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/10 18:28:00 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:28:42 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static void	destroy_textures(t_game *g)
 		free(g->texture.ceiling);
 	if (g->texture.floor)
 		free(g->texture.floor);
-	if (g->texture.NO)
-		free(g->texture.NO);
-	if (g->texture.SO)
-		free(g->texture.SO);
-	if (g->texture.WE)
-		free(g->texture.WE);
-	if (g->texture.EA)
-		free(g->texture.EA);
+	if (g->texture.north)
+		free(g->texture.north);
+	if (g->texture.south)
+		free(g->texture.south);
+	if (g->texture.west)
+		free(g->texture.west);
+	if (g->texture.east)
+		free(g->texture.east);
 }
 
 void	destroy_map(t_game *g)
