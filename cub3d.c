@@ -1,33 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.c                                          :+:      :+:    :+:   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/11 13:13:36 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:21:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/cub3d.h"
 
+static void	default_colours(t_game *g)
+{
+	if (!g->texture.ceiling)
+		g->texture.ceiling = ft_strdup("17,17,132");
+	if (!g->texture.floor)
+		g->texture.floor = ft_strdup("237,232,208");
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	g;
+	int		i;
 
 	if (argc != 2)
 		return (ft_error_msg("Insert one argument only"));
 	if (ft_strlen(argv[1]) < 4
 		|| !ft_strnstr(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
 		return (ft_error_msg("Argument must be a .cub file"));
-	g.map->map_on_file = 0;
-	g.map->map_size.x = 0;
+	ft_bzero(&g, sizeof (t_game));
 	load_map(&g, argv[1]);
+	default_colours(&g);
 	validate_map(&g);
+	ft_printf("Floor: %s\nCeiling: %s\n", g.texture.floor, g.texture.ceiling);
+	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", g.texture.north, g.texture.south, g.texture.west, g.texture.east);
+	i = 0;
+	while (g.map->layout[i])
+	{
+		ft_printf("%s$\n", g.map->layout[i]);
+		i++;
+	}
 	// load everything else
 	// initialise some variables?
 	// run game
+	destroy_game(&g);
 	return (0);
 }
 

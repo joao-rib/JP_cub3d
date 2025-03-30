@@ -1,52 +1,40 @@
-NAME = so_long
-BONUS_NAME = so_long_bonus
+NAME = cub3d
 CC = cc
 FLAGS = -Wall -Wextra -Werror
 RM = rm -fr
-MAIN = so_long.c
-BONUS = so_long_bonus.c
-SRC = libft/*.c ft_printf/*.c Utils/*.c
-OBJ = obj/*.o
+MAIN = cub3d.c
+FILES = Utils/loading.c Utils/validating.c Utils/flood_fill_cub3d.c Utils/destroying.c Utils/error_handling.c cub3d.c
+OBJ_SRC = loading.o validating.o flood_fill_cub3d.o destroying.o error_handling.o cub3d.o
+OBJ = obj/loading.o obj/validating.o obj/flood_fill_cub3d.o obj/destroying.o obj/error_handling.o obj/cub3d.o
+LIBFT = ./libft
 MINILIBX = mlx/minilibx-linux
 MLXFLAGS = -lmlx -lXext -lX11
-BONUS_SRC = libft/*.c ft_printf/*.c Bonus/*.c
-BONUS_OBJ = obj_bonus/*.o
-
+WBLOCK = --no-print-directory
 all: $(NAME)
 
-bonus: $(BONUS_NAME)
-
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -L $(MINILIBX) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -L $(LIBFT) -lft -L $(MINILIBX) $(MLXFLAGS) -o $(NAME)
 
-$(BONUS_NAME): $(BONUS_OBJ)
-	@$(CC) $(FLAGS) $(BONUS_OBJ) -L $(MINILIBX) $(MLXFLAGS) -o $(BONUS_NAME)
-
-$(OBJ): $(MAIN) $(SRC)
+$(OBJ): $(MAIN) $(FILES)
 	@mkdir -p mlx
 	@tar -xzf minilibx-linux.tgz -C mlx
 	@make -C $(MINILIBX) -s
+	@make $(WBLOCK) -C $(LIBFT) all
 	@mkdir -p obj
-	@$(CC) $(FLAGS) -c $(SRC) $(MAIN)
-	@mv *.o obj/
-
-$(BONUS_OBJ): $(BONUS) $(BONUS_SRC)
-	@mkdir -p mlx
-	@tar -xzf minilibx-linux.tgz -C mlx
-	@make -C $(MINILIBX) -s
-	@mkdir -p obj_bonus
-	@$(CC) $(FLAGS) -c $(BONUS_SRC) $(BONUS)
-	@mv *.o obj_bonus/
+	@$(CC) $(FLAGS) -c $(FILES)
+	@mv $(OBJ_SRC) obj/
 
 clean:
-	@$(RM) $(OBJ) $(BONUS_OBJ) obj obj_bonus
+	@$(RM) $(OBJ) obj
+	@make $(WBLOCK) clean -C $(LIBFT)
 	@make clean -C $(MINILIBX) -s
 
 fclean:
-	@$(RM) $(OBJ) $(BONUS_OBJ) $(NAME) $(BONUS_NAME) obj obj_bonus
+	@$(RM) $(OBJ) $(NAME) obj
+	@make $(WBLOCK) fclean -C $(LIBFT)
 	@make clean -C $(MINILIBX) -s
 	@$(RM) mlx
 
 re: fclean all
 
-bonus_re: fclean bonus
+.PHONY: all clean fclean re

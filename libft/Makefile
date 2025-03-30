@@ -28,7 +28,6 @@ ft_lstlast.c \
 ft_lstmap.c \
 ft_lstnew.c \
 ft_lstsize.c \
-ft_mat_add_safe_line.c \
 ft_matrix_add_line.c \
 ft_matrix_dup.c \
 ft_memchr.c \
@@ -67,23 +66,22 @@ ft_strtrim.c \
 ft_substr.c \
 ft_tolower.c \
 ft_toupper.c \
-get_next_line.c \
-ft_matrix_del_line_top.c
+get_next_line.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ)
+	@$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

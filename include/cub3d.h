@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2024/07/11 17:55:14 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:21:02 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,11 @@
 # include "../libft/libft.h"
 # include "../mlx/minilibx-linux/mlx.h"
 
-typedef struct s_point
-{
-	int	x;
-	int	y;
-}		t_point;
-
 typedef struct s_map
 {
 	char			**layout;
 	int				map_on_file;
-//	int				num_coins;
 	struct s_point	map_size;
-//	struct s_point	pos_exit;
 	struct s_point	pos_player;
 }			t_map;
 
@@ -42,10 +34,10 @@ typedef struct s_texture
 {
 	char	*ceiling;
 	char	*floor;
-	char	*NO;
-	char	*SO;
-	char	*WE;
-	char	*EA;
+	char	*north;
+	char	*south;
+	char	*west;
+	char	*east;
 }			t_texture;
 
 /*typedef struct s_sprite
@@ -76,22 +68,14 @@ typedef struct s_game
 }			t_game;
 
 //Utils - Error Handling
-void	error_exit(char *msg, t_game *g); // WIP pode ser necessário reescrever
-void	error_map(char *msg, t_game *g); // WIP pode ser necessário reescrever
-//Utils - Loading
-void	load_map(t_game *g, char *file);
-//void	load_graphics(t_game *g);
-//void	load_sprites(t_game *g, int nsprites);
-//Utils - Rendering
-//void	render_map(t_game *g);
-//int		render_movement(t_game *g);
-//Utils - Moving
-//int		move_handler(int keypress, t_game *g);
-//void	move_player(t_game *g);
+void	error_exit(char *msg, t_game *g);
+void	error_map(char *msg, t_game *g);
 //Utils - Destroying
-void	destroy_map(t_game *g); // WIP pode ser necessário reescrever
-int		destroy_game(t_game *game);  // WIP pode ser necessário reescrever
+void	destroy_map(t_game *g);
+int		destroy_game(t_game *game);
 //Utils - Other
+void	load_map(t_game *g, char *file);
 void	validate_map(t_game *g);
+int		flood_fill_cub3d(char **tab, t_game *g, t_point begin);
 
 #endif

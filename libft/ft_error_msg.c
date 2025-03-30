@@ -14,6 +14,6 @@
 
 int	ft_error_msg(char *str)
 {
-	ft_printf("\033[1m""\033[31m""""Error: ""\033[0m""%s\n", str);
+	ft_printf("Error:\n%s\n", str);
 	return (1);
 }
