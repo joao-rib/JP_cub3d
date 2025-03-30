@@ -20,7 +20,35 @@
 # include <errno.h>
 # include <math.h>
 # include "../libft/libft.h"
-# include "../mlx/minilibx-linux/mlx.h"
+# include "mlx/mlx.h"
+
+
+# include <X11/X.h>
+# include <X11/keysym.h>
+# define ESC 65307
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define C 99
+# define V 118
+# define RIGHT 65363
+# define LEFT 65361
+
+# define FOV 60
+# define WIDTH 1500
+# define HEIGHT 1000
+# define BLOCK_SIZE 64
+# define PLAYER_SPEED 0.2
+# define PLAYER_SENS 0.045
+# define TEXTURE_W 64
+# define TEXTURE_H 64
+
+typedef struct s_point
+{
+	double		player_x;
+	double		player_y;
+}		t_point;
 
 typedef struct s_map
 {
@@ -47,25 +75,55 @@ typedef struct s_texture
 	void	*img;
 }			t_sprite;*/
 
-/*typedef struct s_graph
+typedef struct s_ray
 {
-	void	*mlx;
-	void	*win;
-}			t_graph;*/
+	double	ray_angle;
+	double	distance;
+	int		line_height;
+	bool	wall_hit;
+	bool	side;
+
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	double	raydir_x;
+	double	raydir_y;
+	double	raydist_x;
+	double	raydist_y;
+	double	deltadist_x;
+	double	deltadist_y;
+
+	int		l_pixel;
+	int		h_pixel;
+}	t_ray;
+
+typedef struct s_graph
+{
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}			t_graph;
 
 typedef struct s_game
 {
 	struct s_map		*map;
 	struct s_texture	texture;
-//	struct s_sprite	*sprite;
-//	struct s_graph	display;
-//	struct s_point	curr;
-//	struct s_point	next;
-//	int				moves;
-//	int				coins;
-//	int				nsprites;
-//	int				textpos_y;
+	struct s_graph		*display;
+	struct s_ray		*ray;
+	struct s_point		player;
+
+	void				*mlx_ptr;
+	void				*win_ptr;
+
+	double				dirx;
+	double				diry;
+	double				plane_x;
+	double				plane_y;
 }			t_game;
+
 
 //Utils - Error Handling
 void	error_exit(char *msg, t_game *g);
