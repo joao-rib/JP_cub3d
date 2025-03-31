@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 11:53:34 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:48:50 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,4 @@ void	validate_map(t_game *g)
 		error_map("Map is not contiguous", g);
 	g->player.player_x = (double)g->map->pos_player.x + 0.5;
 	g->player.player_y = (double)g->map->pos_player.y + 0.5;
-	g->map->layout[g->map->pos_player.y][g->map->pos_player.x] = '0';
 }

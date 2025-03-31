@@ -6,20 +6,62 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 14:43:11 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:52:13 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void	create_all_textures(t_game *g)
+static int	create_texture(t_game *game, const int index, char *path,
+	const char *error_msg)
 {
+	t_text_img	*texture;
 
+	texture = game->texture_img[index];
+	texture->img->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
+			path, &texture->width, &texture->height);
+	if (texture->img->mlx_img == NULL)
+	{
+		printf("\nNo texture created (%s)\n\n", error_msg);
+		return (1);
+	}
+	texture->img->addr = mlx_get_data_addr(texture->img->mlx_img,
+			&texture->img->bpp, &texture->img->line_len, &texture->img->endian);
+	if (texture->img->addr == NULL)
+	{
+		printf("\nNo texture addr created (%s)\n\n", error_msg);
+		return (1);
+	}
+	return (0);
+}
+
+static void	create_all_textures(t_game *game)
+{
+if (create_texture(game, 0, game->texture.north, "NORTH")
+	|| create_texture(game, 1, game->texture.south, "SOUTH")
+	|| create_texture(game, 2, game->texture.east, "EAST")
+	|| create_texture(game, 3, game->texture.west, "WEST"))
+{
+	destroy_game(game);
+}
 }
 
 static int	init_window(t_game *game)
 {
+	int	i;
 
+	i = 0;
+	game->mlx_ptr = mlx_init();
+	game->win_ptr = NULL;
+	game->texture_img = ft_calloc(sizeof(t_text_img *), 4);
+	while (i < 4)
+	{
+		game->texture_img[i] = ft_calloc(1, sizeof(t_text_img));
+		game->texture_img[i]->height = 64;
+		game->texture_img[i]->width = 64;
+		game->texture_img[i]->img = ft_calloc(1, sizeof(t_graph));
+		i++;
+	}
 }
 
 static void	set_player_direction(t_game *game, t_point player)
@@ -44,6 +86,7 @@ static void	set_player_direction(t_game *game, t_point player)
 		game->diry = -1;
 		game->plane_x = -0.66;
 	}
+	game->map->layout[player.y][player.x] = '0';
 }
 
 void	load_graphics(t_game *g)
