@@ -19,7 +19,7 @@ mlx:
 	make -C ./include/mlx
 
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -L $(LIBFT) -lft -L $(MINILIBX) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -L $(LIBFT) -lft -L $(MINILIBX) $(MLXFLAGS) -lm -o $(NAME)
 
 $(OBJ): $(MAIN) $(FILES)
 #	@mkdir -p mlx

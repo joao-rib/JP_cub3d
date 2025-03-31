@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 12:28:21 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:33:57 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@
 # define TEXTURE_W 64
 # define TEXTURE_H 64
 
+typedef enum s_compass
+{
+	north,
+	south,
+	west,
+	east,
+}		t_compass;
+
 typedef struct s_player
 {
 	double		player_x;
@@ -67,6 +75,22 @@ typedef struct s_texture
 	char	*west;
 	char	*east;
 }			t_texture;
+
+typedef struct s_text_img
+{
+	struct s_graph	*img;
+	int				width;
+	int				height;
+}			t_text_img;
+
+
+
+/*typedef struct s_sprite
+{
+	int		width;
+	int		height;
+	void	*img;
+}			t_sprite;*/
 
 typedef struct s_ray
 {
@@ -107,6 +131,7 @@ typedef struct s_game
 	struct s_graph		*display;
 	struct s_ray		*ray;
 	struct s_player		player;
+	struct s_text_img	**texture_img;
 
 	void				*mlx_ptr;
 	void				*win_ptr;
