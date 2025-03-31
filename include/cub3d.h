@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:06:20 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:53:51 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <math.h>
 # include "../libft/libft.h"
 # include "mlx/mlx.h"
-
 
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -83,15 +82,6 @@ typedef struct s_text_img
 	int				height;
 }			t_text_img;
 
-
-
-/*typedef struct s_sprite
-{
-	int		width;
-	int		height;
-	void	*img;
-}			t_sprite;*/
-
 typedef struct s_ray
 {
 	double	ray_angle;
@@ -142,7 +132,6 @@ typedef struct s_game
 	double				plane_y;
 }			t_game;
 
-
 //Utils - Error Handling
 void	error_exit(char *msg, t_game *g);
 void	error_map(char *msg, t_game *g);
@@ -152,9 +141,14 @@ int		destroy_game(t_game *game);
 //Utils - Loading
 void	load_map(t_game *g, char *file);
 void	load_graphics(t_game *g);
+//Utils - Rendering
+int		game_frame_loop(t_game *game);
+void	draw_wall(t_game *game, int h_pixel, int l_pixel, int x);
+void	draw_ceiling(t_game *game, int x, int ray_count, int h_pixel);
+void	draw_floor(t_game *game, int x, int ray_count, int l_pixel);
+int		get_texture_color(t_game *game, int tex_y);
 //Utils - Other
 int		key_handler(const int key, t_game *game);
-int		game_frame_loop(t_game *game);
 void	validate_map(t_game *g);
 int		flood_fill_cub3d(char **tab, t_game *g, t_point begin);
 

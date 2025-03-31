@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 15:52:13 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:27:07 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,6 @@ static int	create_texture(t_game *game, const int index, char *path,
 		return (1);
 	}
 	return (0);
-}
-
-static void	create_all_textures(t_game *game)
-{
-if (create_texture(game, 0, game->texture.north, "NORTH")
-	|| create_texture(game, 1, game->texture.south, "SOUTH")
-	|| create_texture(game, 2, game->texture.east, "EAST")
-	|| create_texture(game, 3, game->texture.west, "WEST"))
-{
-	destroy_game(game);
-}
 }
 
 static int	init_window(t_game *game)
@@ -102,6 +91,12 @@ void	load_graphics(t_game *g)
 	g->display = ft_calloc(sizeof(t_graph), 1);
 	if (g->display == NULL)
 		error_exit("Memory allocation error (display)", g);
-	init_window(g); //WIP
-	create_all_textures(g); //WIP
+	init_window(g);
+	if (create_texture(g, 0, g->texture.north, "NORTH")
+		|| create_texture(g, 1, g->texture.south, "SOUTH")
+		|| create_texture(g, 2, g->texture.east, "EAST")
+		|| create_texture(g, 3, g->texture.west, "WEST"))
+	{
+		destroy_game(g);
+	}
 }

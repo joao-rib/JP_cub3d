@@ -6,17 +6,25 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 14:39:17 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:37:41 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-/*static void	destroy_img(t_game *g)
+static void	destroy_img(t_game *g)
 {
-	//WIP texture imgs
-	free(g->img);
-}*/
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		free(g->texture_img[i]->img); //WIP Verificar addr (valgrind)
+		free(g->texture_img[i]);
+		i++;
+	}
+	free(g->texture_img);
+}
 
 void	destroy_map(t_game *g)
 {
@@ -60,8 +68,8 @@ int	destroy_game(t_game *g)
 		mlx_destroy_window(g->mlx_ptr, g->win_ptr);
 	if (g->mlx_ptr)
 		mlx_destroy_display(g->mlx_ptr);
-	//if (g->img) WIP
-	//	destroy_img(g);
+	if (g->texture_img)
+		destroy_img(g);
 	if (g->map)
 		destroy_map(g);
 	exit(1);

@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 15:46:40 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:39:03 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,9 @@ int	game_frame_loop(t_game *game)
 		calculate_ray_steps(game);
 		dda(game);
 		calculate_lines(game);
-		draw_floor_ceiling(game, x, game->ray->h_pixel, game->ray->l_pixel);
+		//draw_floor_ceiling(game, x, game->ray->h_pixel, game->ray->l_pixel);
+		draw_ceiling(game, 0, x, game->ray->h_pixel);
+		draw_floor(game, HEIGHT / 2, x, game->ray->l_pixel);
 		draw_wall(game, game->ray->h_pixel, game->ray->l_pixel, x);
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
