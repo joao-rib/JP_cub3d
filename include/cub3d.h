@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 18:21:02 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:06:50 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,19 @@
 # define TEXTURE_W 64
 # define TEXTURE_H 64
 
-typedef struct s_point
+typedef enum s_compass
+{
+	north,
+	south,
+	west,
+	east,
+}		t_compass;
+
+typedef struct s_player
 {
 	double		player_x;
 	double		player_y;
-}		t_point;
+}		t_player;
 
 typedef struct s_map
 {
@@ -67,6 +75,15 @@ typedef struct s_texture
 	char	*west;
 	char	*east;
 }			t_texture;
+
+typedef struct s_text_img
+{
+	struct s_graph	*img;
+	int				width;
+	int				height;
+}			t_text_img;
+
+
 
 /*typedef struct s_sprite
 {
@@ -113,7 +130,8 @@ typedef struct s_game
 	struct s_texture	texture;
 	struct s_graph		*display;
 	struct s_ray		*ray;
-	struct s_point		player;
+	struct s_player		player;
+	struct s_text_img	**texture_img;
 
 	void				*mlx_ptr;
 	void				*win_ptr;

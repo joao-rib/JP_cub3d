@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 18:21:18 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:05:31 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,209 @@ static void	default_colours(t_game *g)
 		g->texture.floor = ft_strdup("237,232,208");
 }
 
-/*int	quit_game(t_game *game)
+void	better_mlx_pixel_put(t_graph **img, int x, int y, int color)
 {
-	if (game->display && game->display->mlx_img)
-		mlx_destroy_image(game->mlx_ptr, game->display->mlx_img);
-	if (game->win_ptr != NULL)
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	if (game->mlx_ptr != NULL)
+	char	*dst;
+
+	dst = (*img)->addr + (y * (*img)->line_len + x * ((*img)->bpp / 8));
+	*(unsigned int *)dst = color;
+}
+
+int	get_pixel_color(t_game *game, int higher_pixel, int lower_pixel, int t_index)
+{
+	int	color;
+
+	color = *(unsigned int *)(game->texture_img[t_index]->img->addr \
+	+ (higher_pixel * game->texture_img[t_index]->img->line_len + lower_pixel \
+			* (game->texture_img[t_index]->img->bpp / 8)));
+	return (color);
+}
+
+void	print_texture_pixel(t_game *game, int x, int h_pixel, int color)
+{
+	if (game->ray->side == true)
 	{
-		free(game->mlx_ptr);
-		game->mlx_ptr = NULL;
+		if (game->ray->raydir_y > 0)
+			better_mlx_pixel_put(&game->display, x, h_pixel, color);
+		else
+			better_mlx_pixel_put(&game->display, x, h_pixel, color);
 	}
-	exit(0);
-}*/
+	else
+	{
+		if (game->ray->raydir_x > 0)
+			better_mlx_pixel_put(&game->display, x, h_pixel, color);
+		else
+			better_mlx_pixel_put(&game->display, x, h_pixel, color);
+	}
+}
+
+int	find_right_side(t_game *game, int tex_y, int tex_x)
+{
+	if (game->ray->side == true)
+	{
+		if (game->ray->raydir_y > 0)
+			return (get_pixel_color(game, tex_y, tex_x, west));
+		return (get_pixel_color(game, tex_y, tex_x, east));
+	}
+	if (game->ray->raydir_x > 0)
+		return (get_pixel_color(game, tex_y, tex_x, north));
+	return (get_pixel_color(game, tex_y, tex_x, south));
+}
+
+int	get_texture_color(t_game *game, int tex_y)
+{
+	double	wall_x;
+	int		tex_x;
+
+	if (game->ray->side == false)
+		wall_x = game->player.player_y + game->ray->distance \
+			* game->ray->raydir_y;
+	else
+		wall_x = game->player.player_x + game->ray->distance \
+			* game->ray->raydir_x;
+	wall_x -= floor(wall_x);
+	tex_x = wall_x * (double)TEXTURE_W;
+	if (game->ray->side == false && game->ray->raydir_x > 0)
+		tex_x = TEXTURE_W - tex_x - 1;
+	if (game->ray->side == true && game->ray->raydir_y < 0)
+		tex_x = TEXTURE_W - tex_x - 1;
+	return (find_right_side(game, tex_y, tex_x));
+}
+
+int	create_texture(t_game *game, const int index, char *path,
+	const char *error_msg)
+{
+	t_text_img	*texture;
+
+	texture = game->texture_img[index];
+	texture->img->mlx_img = mlx_xpm_file_to_image(game->mlx_ptr,
+			path, &texture->width, &texture->height);
+	if (texture->img->mlx_img == NULL)
+	{
+		printf("\nNo texture created (%s)\n\n", error_msg);
+		return (1);
+	}
+	texture->img->addr = mlx_get_data_addr(texture->img->mlx_img,
+			&texture->img->bpp, &texture->img->line_len, &texture->img->endian);
+	if (texture->img->addr == NULL)
+	{
+		printf("\nNo texture addr created (%s)\n\n", error_msg);
+		return (1);
+	}
+	return (0);
+}
+
+void	create_all_textures(t_game *game)
+{
+if (create_texture(game, 0, game->texture.north, "NORTH")
+	|| create_texture(game, 1, game->texture.south, "SOUTH")
+	|| create_texture(game, 2, game->texture.east, "EAST")
+	|| create_texture(game, 3, game->texture.west, "WEST"))
+{
+	destroy_game(game);
+}
+}
+
+unsigned long	convert_rgb(char *color)
+{
+	int		r;
+	int		g;
+	int		b;
+	int		i;
+	char	**temp_color;
+
+	i = 0;
+	temp_color = ft_split(color, ',');
+	if (temp_color)
+	{
+		if (temp_color[0] && temp_color[1] && temp_color[2])
+		{
+			r = ft_atoi(temp_color[0]);
+			g = ft_atoi(temp_color[1]);
+			b = ft_atoi(temp_color[2]);
+		}
+		else
+			return (ft_printf("Error with convert_rgb!\n"));
+		while (temp_color[i])
+			free(temp_color[i++]);
+		free(temp_color);
+		return ((r << 16) | (g << 8) | b);
+	}
+	return (0);
+}
+
+void	draw_floor(t_game *game, int x, int ray_count, int l_pixel)
+{
+	unsigned long	floor_rgb_set;
+	unsigned long	floor_rgb;
+	int				stop;
+
+	floor_rgb_set = convert_rgb(game->texture.floor);
+	stop = (HEIGHT / 2) + ((HEIGHT / 2) / 2);
+	while (x < HEIGHT)
+	{
+		while (x < l_pixel)
+			x++ ;
+		floor_rgb = floor_rgb_set;
+		if (x < (((HEIGHT / 2) + stop) / 2))
+			better_mlx_pixel_put(&game->display, ray_count, x++, 0);
+		else if (x < stop + 50)
+			better_mlx_pixel_put(&game->display, ray_count, x++, floor_rgb);
+		else
+			better_mlx_pixel_put(&game->display, ray_count, x++, floor_rgb_set);
+	}
+}
+
+void	draw_ceiling(t_game *game, int x, int ray_count, int h_pixel)
+{
+	unsigned long	ceiling_rgb;
+	unsigned long	ceiling_rgb_set;
+	int				stop;
+
+	ceiling_rgb_set = convert_rgb(game->texture.ceiling);
+	stop = (HEIGHT / 2) - ((HEIGHT / 2) / 2);
+	while (x < HEIGHT / 2)
+	{
+		if (x == h_pixel)
+			return ;
+		ceiling_rgb = ceiling_rgb_set;
+		if (x > ((HEIGHT / 2) + stop) / 2)
+			better_mlx_pixel_put(&game->display, ray_count, x++, 0);
+		else if (x >= ((HEIGHT / 2) / 2) - 100)
+			better_mlx_pixel_put(&game->display, ray_count, x++, ceiling_rgb);
+		else
+			better_mlx_pixel_put(&game->display, ray_count, x++, ceiling_rgb_set);
+	}
+}
+
+void	draw_floor_ceiling(t_game *game, int ray_count, int h_pixel, \
+	int l_pixel)
+{
+	int		x;
+
+	x = 0;
+	draw_ceiling(game, x, ray_count, h_pixel);
+	x = HEIGHT / 2;
+	draw_floor(game, x, ray_count, l_pixel);
+}
+
+void	draw_wall(t_game *game, int h_pixel, int l_pixel, int x)
+{
+	double	tex_pos;
+	double	step;
+	int		color;
+	int		tex_y;
+
+	step = 1.0 * TEXTURE_H / game->ray->line_height;
+	tex_pos = (h_pixel - HEIGHT / 2 + game->ray->line_height / 2) * step;
+	while (h_pixel++ < l_pixel)
+	{
+		tex_y = (int)tex_pos & (TEXTURE_H - 1);
+		tex_pos += step;
+		color = get_texture_color(game, tex_y);
+		print_texture_pixel(game, x, h_pixel, color);
+	}
+}
 
 int	key_handler(const int key, t_game *game)
 {
@@ -55,6 +245,30 @@ int	key_handler(const int key, t_game *game)
 	if (key == RIGHT)
 		ft_printf("Look right\n");//look_direction(game, false);
 	return (0);
+}
+
+void	set_player_direction(t_game *game, const char c)
+{
+	if (c == 'N')
+	{
+		game->dirx = -1;
+		game->plane_y = 0.66;
+	}
+	else if (c == 'S')
+	{
+		game->dirx = 1;
+		game->plane_y = -0.66;
+	}
+	else if (c == 'E')
+	{
+		game->diry = 1;
+		game->plane_x = 0.66;
+	}
+	else if (c == 'W')
+	{
+		game->diry = -1;
+		game->plane_x = -0.66;
+	}
 }
 
 void	ft_get_player_pos(t_game *game)
@@ -82,30 +296,6 @@ void	ft_get_player_pos(t_game *game)
 		i++;
 	}
 	destroy_game(game);
-}
-
-void	set_player_direction(t_game *game, const char c)
-{
-	if (c == 'N')
-	{
-		game->dirx = -1;
-		game->plane_y = 0.66;
-	}
-	else if (c == 'S')
-	{
-		game->dirx = 1;
-		game->plane_y = -0.66;
-	}
-	else if (c == 'E')
-	{
-		game->diry = 1;
-		game->plane_x = 0.66;
-	}
-	else if (c == 'W')
-	{
-		game->diry = -1;
-		game->plane_x = -0.66;
-	}
 }
 
 void	calculate_ray_direction(t_game *game, int x)
@@ -213,18 +403,6 @@ void	shoot_rays(t_game *game)
 	}
 }
 
-void	init_game(t_game *game)
-{
-	display_window(game);
-	if (game->win_ptr == NULL)
-		return ;
-	mlx_loop_hook(game->mlx_ptr, &game_frame_loop, game);
-	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, &key_handler, game);
-	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
-		&destroy_game, game);
-	mlx_loop(game->mlx_ptr);
-}
-
 void	display_window(t_game *game)
 {
 	if (game->mlx_ptr == NULL)
@@ -248,6 +426,36 @@ int	game_frame_loop(t_game *game)
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
 		game->display->mlx_img, 0, 0);
 	return (0);
+}
+
+void	init_game(t_game *game)
+{
+	display_window(game);
+	if (game->win_ptr == NULL)
+		return ;
+	mlx_loop_hook(game->mlx_ptr, &game_frame_loop, game);
+	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, &key_handler, game);
+	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
+		&destroy_game, game);
+	mlx_loop(game->mlx_ptr);
+}
+
+void	init_window(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	game->mlx_ptr = mlx_init();
+	game->win_ptr = NULL;
+	game->texture_img = ft_calloc(sizeof(t_text_img *), 4);
+	while (i < 4)
+	{
+		game->texture_img[i] = ft_calloc(1, sizeof(t_text_img));
+		game->texture_img[i]->height = 64;
+		game->texture_img[i]->width = 64;
+		game->texture_img[i]->img = ft_calloc(1, sizeof(t_graph));
+		i++;
+	}
 }
 
 t_game	*strutc_init(t_game *game)

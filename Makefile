@@ -8,7 +8,7 @@ OBJ_SRC = loading.o validating.o flood_fill_cub3d.o destroying.o error_handling.
 OBJ = obj/loading.o obj/validating.o obj/flood_fill_cub3d.o obj/destroying.o obj/error_handling.o obj/cub3d.o #obj/keys.o obj/utils.o
 LIBFT = ./libft
 #MINILIBX = mlx/minilibx-linux
-MINILIBX = ./include/mlx/minilibx-linux
+MINILIBX = ./include/mlx
 MLXFLAGS = -lmlx -lXext -lX11
 WBLOCK = --no-print-directory
 
@@ -19,7 +19,7 @@ mlx:
 	make -C ./include/mlx
 
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -L $(LIBFT) -lft -L $(MINILIBX) $(MLXFLAGS) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -L $(LIBFT) -lft -L $(MINILIBX) $(MLXFLAGS) -lm -o $(NAME)
 
 $(OBJ): $(MAIN) $(FILES)
 #	@mkdir -p mlx

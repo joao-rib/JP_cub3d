@@ -1,3 +1,11 @@
+NO texture/north_wall.xpm
+SO texture/south_wall.xpm
+WE texture/west_wall.xpm
+EA texture/east_wall.xpm
+
+F 139,99,58
+C 171,154,137
+
 1111111
 1000001
 1000001
