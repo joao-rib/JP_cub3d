@@ -6,7 +6,7 @@
 /*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 15:06:50 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:06:20 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,12 @@ void	error_map(char *msg, t_game *g);
 //Utils - Destroying
 void	destroy_map(t_game *g);
 int		destroy_game(t_game *game);
-//Utils - Other
+//Utils - Loading
 void	load_map(t_game *g, char *file);
+void	load_graphics(t_game *g);
+//Utils - Other
+int		key_handler(const int key, t_game *game);
+int		game_frame_loop(t_game *game);
 void	validate_map(t_game *g);
 int		flood_fill_cub3d(char **tab, t_game *g, t_point begin);
 
