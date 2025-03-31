@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 12:36:48 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:43:11 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	load_graphics(t_game *g)
 	set_player_direction(g, g->map->pos_player);
 	g->ray = (t_ray *)ft_calloc(sizeof(t_ray), 1);
 	if (g->ray == NULL)
-		destroy_game(g); //WIP error msg?
+		error_exit("Memory allocation error (ray)", g);
 	g->display = ft_calloc(sizeof(t_graph), 1);
 	if (g->display == NULL)
-		destroy_game(g); //WIP error msg?
+		error_exit("Memory allocation error (display)", g);
 	init_window(g); //WIP
 	create_all_textures(g); //WIP
 }

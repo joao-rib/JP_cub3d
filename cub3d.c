@@ -6,33 +6,44 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 12:40:00 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:47:46 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/cub3d.h"
 
-static void	default_colours(t_game *g)
+static bool	check_file(char *path)
 {
+	int		fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		return (false);
+	close(fd);
+	return (true);
+}
+
+static bool	default_colours(t_game *g)
+{
+	bool	result;
+
+	result = true;
 	if (!g->texture.ceiling)
 		g->texture.ceiling = ft_strdup("17,17,132");
 	if (!g->texture.floor)
 		g->texture.floor = ft_strdup("237,232,208");
+	if (g->texture.north)
+		result = check_file(g->texture.north);
+	if (result && g->texture.south)
+		result = check_file(g->texture.south);
+	if (result && g->texture.west)
+		result = check_file(g->texture.west);
+	if (result && g->texture.east)
+		result = check_file(g->texture.east);
+	if (!result)
+		destroy_map(g);
+	return (result);
 }
-
-/*int	quit_game(t_game *game)
-{
-	if (game->display && game->display->mlx_img)
-		mlx_destroy_image(game->mlx_ptr, game->display->mlx_img);
-	if (game->win_ptr != NULL)
-		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
-	if (game->mlx_ptr != NULL)
-	{
-		free(game->mlx_ptr);
-		game->mlx_ptr = NULL;
-	}
-	exit(0);
-}*/
 
 static void	init_game(t_game *game)
 {
@@ -42,7 +53,6 @@ static void	init_game(t_game *game)
 			WIDTH, HEIGHT, "cub3d");
 	if (game->win_ptr == NULL)
 		return ;
-	//display_window(game);
 	mlx_loop_hook(game->mlx_ptr, &game_frame_loop, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, &key_handler, game);
 	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
@@ -62,7 +72,8 @@ int	main(int argc, char **argv)
 		return (ft_error_msg("Argument must be a .cub file"));
 	ft_bzero(&g, sizeof (t_game));
 	load_map(&g, argv[1]);
-	default_colours(&g);
+	if (!default_colours(&g))
+		return (ft_error_msg("Texture file not found"));
 	validate_map(&g);
 	ft_printf("Floor: %s\nCeiling: %s\n", g.texture.floor, g.texture.ceiling);
 	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", g.texture.north, g.texture.south, g.texture.west, g.texture.east);
@@ -72,7 +83,6 @@ int	main(int argc, char **argv)
 		ft_printf("%s$\n", g.map->layout[i]);
 		i++;
 	}
-	//WIP texture_map_not_valid
 	load_graphics(&g); //WIP Functions to be written
 	init_game(&g); //WIP
 	destroy_game(&g);

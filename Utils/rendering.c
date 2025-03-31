@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 12:37:16 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:50:33 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,17 @@ static void	calculate_ray_steps(t_game *game)
 	}
 }
 
-static void	shoot_rays(t_game *game)
+int	game_frame_loop(t_game *game)
 {
 	int	x;
 
+	if (game->display && game->display->mlx_img)
+		mlx_destroy_image(game->mlx_ptr, game->display->mlx_img);
+	game->display->mlx_img = mlx_new_image(game->mlx_ptr,
+			WIDTH, HEIGHT);
+	game->display->addr = mlx_get_data_addr(game->display->mlx_img,
+			&game->display->bpp, &game->display->line_len,
+			&game->display->endian);
 	x = 0;
 	while (x++ < WIDTH - 1)
 	{
@@ -115,18 +122,6 @@ static void	shoot_rays(t_game *game)
 		draw_floor_ceiling(game, x, game->ray->h_pixel, game->ray->l_pixel);
 		draw_wall(game, game->ray->h_pixel, game->ray->l_pixel, x);
 	}
-}
-
-int	game_frame_loop(t_game *game)
-{
-	if (game->display && game->display->mlx_img)
-		mlx_destroy_image(game->mlx_ptr, game->display->mlx_img);
-	game->display->mlx_img = mlx_new_image(game->mlx_ptr,
-			WIDTH, HEIGHT);
-	game->display->addr = mlx_get_data_addr(game->display->mlx_img,
-			&game->display->bpp, &game->display->line_len,
-			&game->display->endian);
-	shoot_rays(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr,
 		game->display->mlx_img, 0, 0);
 	return (0);
