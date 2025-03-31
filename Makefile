@@ -7,7 +7,8 @@ FILES = Utils/loading.c Utils/validating.c Utils/flood_fill_cub3d.c Utils/destro
 OBJ_SRC = loading.o validating.o flood_fill_cub3d.o destroying.o error_handling.o cub3d.o #keys.o utils.o
 OBJ = obj/loading.o obj/validating.o obj/flood_fill_cub3d.o obj/destroying.o obj/error_handling.o obj/cub3d.o #obj/keys.o obj/utils.o
 LIBFT = ./libft
-MINILIBX = mlx/minilibx-linux
+#MINILIBX = mlx/minilibx-linux
+MINILIBX = ./include/mlx/minilibx-linux
 MLXFLAGS = -lmlx -lXext -lX11
 WBLOCK = --no-print-directory
 
@@ -21,9 +22,9 @@ $(NAME): $(OBJ)
 	@$(CC) $(FLAGS) $(OBJ) -L $(LIBFT) -lft -L $(MINILIBX) $(MLXFLAGS) -o $(NAME)
 
 $(OBJ): $(MAIN) $(FILES)
-	@mkdir -p mlx
-	@tar -xzf minilibx-linux.tgz -C mlx
-	@make -C $(MINILIBX) -s
+#	@mkdir -p mlx
+#	@tar -xzf minilibx-linux.tgz -C mlx
+#	@make -C $(MINILIBX) -s
 	@make $(WBLOCK) -C $(LIBFT) all
 	@mkdir -p obj
 	@$(CC) $(FLAGS) -c $(FILES)
