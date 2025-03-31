@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 12:33:13 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:40:00 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,6 @@ static void	init_game(t_game *game)
 		&destroy_game, game);
 	mlx_loop(game->mlx_ptr);
 }
-
-/*void	display_window(t_game *game)
-{
-	if (game->mlx_ptr == NULL)
-		return ;
-	game->win_ptr = mlx_new_window(game->mlx_ptr,
-			WIDTH, HEIGHT, "cub3d");
-	if (game->win_ptr == NULL)
-		return ;
-}*/
 
 int	main(int argc, char **argv)
 {
