@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 18:21:02 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:28:21 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@
 # define TEXTURE_W 64
 # define TEXTURE_H 64
 
-typedef struct s_point
+typedef struct s_player
 {
 	double		player_x;
 	double		player_y;
-}		t_point;
+}		t_player;
 
 typedef struct s_map
 {
@@ -67,13 +67,6 @@ typedef struct s_texture
 	char	*west;
 	char	*east;
 }			t_texture;
-
-/*typedef struct s_sprite
-{
-	int		width;
-	int		height;
-	void	*img;
-}			t_sprite;*/
 
 typedef struct s_ray
 {
@@ -113,7 +106,7 @@ typedef struct s_game
 	struct s_texture	texture;
 	struct s_graph		*display;
 	struct s_ray		*ray;
-	struct s_point		player;
+	struct s_player		player;
 
 	void				*mlx_ptr;
 	void				*win_ptr;
@@ -131,8 +124,12 @@ void	error_map(char *msg, t_game *g);
 //Utils - Destroying
 void	destroy_map(t_game *g);
 int		destroy_game(t_game *game);
-//Utils - Other
+//Utils - Loading
 void	load_map(t_game *g, char *file);
+void	load_graphics(t_game *g);
+//Utils - Other
+int		key_handler(const int key, t_game *game);
+int		game_frame_loop(t_game *game);
 void	validate_map(t_game *g);
 int		flood_fill_cub3d(char **tab, t_game *g, t_point begin);
 

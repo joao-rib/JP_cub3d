@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/15 18:28:42 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:34:18 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,14 @@ void	destroy_map(t_game *g)
 	destroy_textures(g);
 }
 
-/*static void	destroy_sprites(t_game *g)
-{
-	g->nsprites--;
-	while (g->nsprites >= 0)
-	{
-		mlx_destroy_image(g->display.mlx, g->sprite[g->nsprites].img);
-		g->nsprites--;
-	}
-	free(g->sprite);
-}*/
-
 int	destroy_game(t_game *g)
 {
 	if (!g)
 		return (1);
-	//if (g->sprite)
-	//	destroy_sprites(g);
+	if (g->ray)
+		destroy_ray(g); // WIP
+	if (g->display)
+		destroy_display(g); // WIP
 	//if (g->display.win)
 	//	mlx_destroy_window(g->display.mlx, g->display.win);
 	//if (g->display.mlx)
