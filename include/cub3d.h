@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 15:39:26 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:34:19 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ typedef enum s_compass
 {
 	north,
 	south,
-	west,
 	east,
+	west,
 }		t_compass;
 
 typedef struct s_player
@@ -147,12 +147,11 @@ void	draw_wall(t_game *game, int h_pixel, int l_pixel, int x);
 void	draw_ceiling(t_game *game, int x, int ray_count, int h_pixel);
 void	draw_floor(t_game *game, int x, int ray_count, int l_pixel);
 int		get_texture_color(t_game *game, int tex_y);
-void	draw_floor_ceiling(t_game *game, int ray_count, int h_pixel, int l_pixel);
-//Utils - Other
+//Utils - Moving
 int		key_handler(const int key, t_game *game);
+void	look_direction(t_game *game, const bool is_left);
+//Utils - Validation
 void	validate_map(t_game *g);
 int		flood_fill_cub3d(char **tab, t_game *g, t_point begin);
-//Utils - Moving
-void	look_direction(t_game *game, const bool is_left);
 
 #endif

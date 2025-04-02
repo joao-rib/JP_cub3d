@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moving.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 16:32:23 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:31:09 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	move_left(t_game *game)
 	if (game->map->layout[(int)(game->player.player_x)]
 		[(int)(game->player.player_y + new_y)] == '0')
 		game->player.player_y += new_y;
-
 }
 
 void	move_right(t_game *game)

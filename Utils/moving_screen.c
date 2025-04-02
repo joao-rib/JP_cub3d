@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   moving_screen.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:08:27 by tbezerra          #+#    #+#             */
-/*   Updated: 2025/04/02 14:10:56 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:31:39 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/cub3d.h"
+#include "../include/cub3d.h"
 
-void	rotate_vector(double *x, double *y, double angle)
+static void	rotate_vector(double *x, double *y, double angle)
 {
 	double	old_x;
 

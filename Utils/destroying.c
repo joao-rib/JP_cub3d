@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroying.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 19:11:42 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:28:51 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	destroy_img(t_game *g)
 	int	i;
 
 	if (!g->texture_img)
-		return;
+		return ;
 	i = 0;
 	while (i < 4)
 	{
@@ -26,14 +26,13 @@ static void	destroy_img(t_game *g)
 			if (g->texture_img[i]->img)
 			{
 				mlx_destroy_image(g->mlx_ptr, g->texture_img[i]->img->mlx_img);
-				//free(g->texture_img[i]->img->mlx_img);
-				free(g->texture_img[i]->img); // Libera `t_graph`
+				free(g->texture_img[i]->img);
 			}
-			free(g->texture_img[i]); // Libera `t_text_img`
+			free(g->texture_img[i]);
 		}
 		i++;
 	}
-	free(g->texture_img); // Libera o array de ponteiros
+	free(g->texture_img);
 	g->texture_img = NULL;
 }
 
@@ -75,11 +74,6 @@ int	destroy_game(t_game *g)
 		mlx_destroy_image(g->mlx_ptr, g->display->mlx_img);
 	if (g->display)
 		free(g->display);
-/* 	{
-		if (g->display->addr)
-			free(g->display->addr);
-		free(g->display);
-	} */
 	if (g->win_ptr)
 		mlx_destroy_window(g->mlx_ptr, g->win_ptr);
 	if (g->mlx_ptr)

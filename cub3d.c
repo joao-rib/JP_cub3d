@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 17:55:34 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:30:38 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	init_game(t_game *game)
 			WIDTH, HEIGHT, "cub3d");
 	if (game->win_ptr == NULL)
 		return ;
-	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, &key_handler, game); //WIP
+	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, &key_handler, game);
 	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
 		&destroy_game, game);
 	mlx_loop_hook(game->mlx_ptr, &game_frame_loop, game);
@@ -63,7 +63,6 @@ static void	init_game(t_game *game)
 int	main(int argc, char **argv)
 {
 	t_game	g;
-	int		i;
 
 	if (argc != 2)
 		return (ft_error_msg("Insert one argument only"));
@@ -75,16 +74,8 @@ int	main(int argc, char **argv)
 	if (!default_colours(&g))
 		return (ft_error_msg("Texture file not found"));
 	validate_map(&g);
-	ft_printf("Floor: %s\nCeiling: %s\n", g.texture.floor, g.texture.ceiling);
-	ft_printf("NO: %s\nSO: %s\nWE: %s\nEA: %s\n", g.texture.north, g.texture.south, g.texture.west, g.texture.east);
-	i = 0;
-	while (g.map->layout[i])
-	{
-		ft_printf("%s$\n", g.map->layout[i]);
-		i++;
-	}
 	load_graphics(&g);
-	init_game(&g); //WIP
+	init_game(&g);
 	destroy_game(&g);
 	return (0);
 }
