@@ -6,7 +6,7 @@
 /*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 18:27:30 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:11:42 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ static void	destroy_img(t_game *g)
 		if (g->texture_img[i])
 		{
 			if (g->texture_img[i]->img)
+			{
+				mlx_destroy_image(g->mlx_ptr, g->texture_img[i]->img->mlx_img);
+				//free(g->texture_img[i]->img->mlx_img);
 				free(g->texture_img[i]->img); // Libera `t_graph`
+			}
 			free(g->texture_img[i]); // Libera `t_text_img`
 		}
 		i++;

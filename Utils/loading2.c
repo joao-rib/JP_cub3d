@@ -6,11 +6,18 @@
 /*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 17:11:32 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:05:40 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+/*		if (g->texture_img[i])
+		{
+			if (g->texture_img[i]->img)
+				free(g->texture_img[i]->img); // Libera `t_graph`
+			free(g->texture_img[i]); // Libera `t_text_img`
+		}*/
 
 static int	create_texture(t_game *game, const int index, char *path,
 	const char *error_msg)
@@ -23,6 +30,9 @@ static int	create_texture(t_game *game, const int index, char *path,
 	if (texture->img->mlx_img == NULL)
 	{
 		printf("\nNo texture created (%s)\n\n", error_msg);
+		free(texture->img);
+		free(texture);
+		game->texture_img[index] = NULL;
 		return (1);
 	}
 	texture->img->addr = mlx_get_data_addr(texture->img->mlx_img,
@@ -30,8 +40,14 @@ static int	create_texture(t_game *game, const int index, char *path,
 	if (texture->img->addr == NULL)
 	{
 		printf("\nNo texture addr created (%s)\n\n", error_msg);
+		mlx_destroy_image(game->mlx_ptr, texture->img->mlx_img);
+		free(texture->img);
+		free(texture);
+		game->texture_img[index] = NULL;
 		return (1);
 	}
+	//free(texture->img->mlx_img);
+	//free(texture);
 	return (0);
 }
 
