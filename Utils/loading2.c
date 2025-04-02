@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   loading2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:27:07 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:05:40 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+/*		if (g->texture_img[i])
+		{
+			if (g->texture_img[i]->img)
+				free(g->texture_img[i]->img); // Libera `t_graph`
+			free(g->texture_img[i]); // Libera `t_text_img`
+		}*/
 
 static int	create_texture(t_game *game, const int index, char *path,
 	const char *error_msg)
@@ -23,6 +30,9 @@ static int	create_texture(t_game *game, const int index, char *path,
 	if (texture->img->mlx_img == NULL)
 	{
 		printf("\nNo texture created (%s)\n\n", error_msg);
+		free(texture->img);
+		free(texture);
+		game->texture_img[index] = NULL;
 		return (1);
 	}
 	texture->img->addr = mlx_get_data_addr(texture->img->mlx_img,
@@ -30,12 +40,18 @@ static int	create_texture(t_game *game, const int index, char *path,
 	if (texture->img->addr == NULL)
 	{
 		printf("\nNo texture addr created (%s)\n\n", error_msg);
+		mlx_destroy_image(game->mlx_ptr, texture->img->mlx_img);
+		free(texture->img);
+		free(texture);
+		game->texture_img[index] = NULL;
 		return (1);
 	}
+	//free(texture->img->mlx_img);
+	//free(texture);
 	return (0);
 }
 
-static int	init_window(t_game *game)
+static void	init_window(t_game *game)
 {
 	int	i;
 
@@ -43,6 +59,8 @@ static int	init_window(t_game *game)
 	game->mlx_ptr = mlx_init();
 	game->win_ptr = NULL;
 	game->texture_img = ft_calloc(sizeof(t_text_img *), 4);
+	if (game->texture_img == NULL)
+		error_exit("Memory allocation error (texture_img)", game);
 	while (i < 4)
 	{
 		game->texture_img[i] = ft_calloc(1, sizeof(t_text_img));
@@ -80,9 +98,9 @@ static void	set_player_direction(t_game *game, t_point player)
 
 void	load_graphics(t_game *g)
 {
-	char	*line;
+	/*char	*line;
 	int		fd;
-	int		i;
+	int		i;*/
 
 	set_player_direction(g, g->map->pos_player);
 	g->ray = (t_ray *)ft_calloc(sizeof(t_ray), 1);

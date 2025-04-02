@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:50:49 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:55:34 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static void	init_game(t_game *game)
 			WIDTH, HEIGHT, "cub3d");
 	if (game->win_ptr == NULL)
 		return ;
-	mlx_loop_hook(game->mlx_ptr, &game_frame_loop, game);
 	mlx_hook(game->win_ptr, KeyPress, KeyPressMask, &key_handler, game); //WIP
 	mlx_hook(game->win_ptr, DestroyNotify, StructureNotifyMask,
 		&destroy_game, game);
+	mlx_loop_hook(game->mlx_ptr, &game_frame_loop, game);
 	mlx_loop(game->mlx_ptr);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroying.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:37:41 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 19:11:42 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,25 @@ static void	destroy_img(t_game *g)
 {
 	int	i;
 
+	if (!g->texture_img)
+		return;
 	i = 0;
 	while (i < 4)
 	{
-		free(g->texture_img[i]->img); //WIP Verificar addr (valgrind)
-		free(g->texture_img[i]);
+		if (g->texture_img[i])
+		{
+			if (g->texture_img[i]->img)
+			{
+				mlx_destroy_image(g->mlx_ptr, g->texture_img[i]->img->mlx_img);
+				//free(g->texture_img[i]->img->mlx_img);
+				free(g->texture_img[i]->img); // Libera `t_graph`
+			}
+			free(g->texture_img[i]); // Libera `t_text_img`
+		}
 		i++;
 	}
-	free(g->texture_img);
+	free(g->texture_img); // Libera o array de ponteiros
+	g->texture_img = NULL;
 }
 
 void	destroy_map(t_game *g)
@@ -58,18 +69,24 @@ int	destroy_game(t_game *g)
 		return (1);
 	if (g->ray)
 		free(g->ray);
+	if (g->texture_img)
+		destroy_img(g);
+	if (g->display->mlx_img)
+		mlx_destroy_image(g->mlx_ptr, g->display->mlx_img);
 	if (g->display)
-	{
+		free(g->display);
+/* 	{
 		if (g->display->addr)
 			free(g->display->addr);
 		free(g->display);
-	}
+	} */
 	if (g->win_ptr)
 		mlx_destroy_window(g->mlx_ptr, g->win_ptr);
 	if (g->mlx_ptr)
+	{
 		mlx_destroy_display(g->mlx_ptr);
-	if (g->texture_img)
-		destroy_img(g);
+		free(g->mlx_ptr);
+	}
 	if (g->map)
 		destroy_map(g);
 	exit(1);

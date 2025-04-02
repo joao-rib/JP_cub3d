@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:55:33 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:31:31 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	draw_floor(t_game *game, int x, int ray_count, int l_pixel)
 	int				stop;
 
 	floor_rgb_set = convert_rgb(game->texture.floor);
-	stop = (HEIGHT / 2) + ((HEIGHT / 2) / 2);
+	stop = (HEIGHT / 2) + ((HEIGHT / 2) / 4);
 	while (x < HEIGHT)
 	{
 		while (x < l_pixel)
@@ -101,7 +101,8 @@ void	draw_ceiling(t_game *g, int x, int ray_count, int h_pixel)
 		if (x == h_pixel)
 			return ;
 		ceiling_rgb = ceiling_rgb_set;
-		if (x > ((HEIGHT / 2) + stop) / 2)
+		//if (x > ((HEIGHT / 2) + stop) / 2)
+		if (x > ((HEIGHT / 2) + stop))
 			better_mlx_pixel_put(&g->display, ray_count, x++, 0);
 		else if (x >= ((HEIGHT / 2) / 2) - 100)
 			better_mlx_pixel_put(&g->display, ray_count, x++, ceiling_rgb);
@@ -110,16 +111,18 @@ void	draw_ceiling(t_game *g, int x, int ray_count, int h_pixel)
 	}
 }
 
-/*void	draw_floor_ceiling(t_game *game, int ray_count, int h_pixel, \
+/* void	draw_floor_ceiling(t_game *game, int ray_count, int h_pixel, \
 	int l_pixel)
 {
 	int		x;
 
 	x = 0;
+ 	printf("h_pixel: %d\n", h_pixel);
+	printf("l_pixel: %d\n", l_pixel);
 	draw_ceiling(game, x, ray_count, h_pixel);
 	x = HEIGHT / 2;
 	draw_floor(game, x, ray_count, l_pixel);
-}*/
+} */
 
 void	draw_wall(t_game *game, int h_pixel, int l_pixel, int x)
 {
@@ -136,6 +139,6 @@ void	draw_wall(t_game *game, int h_pixel, int l_pixel, int x)
 		tex_pos += step;
 		color = get_texture_color(game, tex_y);
 		//print_texture_pixel(game, x, h_pixel, color);
-		better_mlx_pixel_put(game->display, x, h_pixel, color);
+		better_mlx_pixel_put(&game->display, x, h_pixel, color);
 	}
 }
