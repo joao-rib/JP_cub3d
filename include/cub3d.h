@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:53:51 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:39:26 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define HEIGHT 1000
 # define BLOCK_SIZE 64
 # define PLAYER_SPEED 0.2
-# define PLAYER_SENS 0.045
+# define SCREEN_SENS 0.045
 # define TEXTURE_W 64
 # define TEXTURE_H 64
 
@@ -147,9 +147,12 @@ void	draw_wall(t_game *game, int h_pixel, int l_pixel, int x);
 void	draw_ceiling(t_game *game, int x, int ray_count, int h_pixel);
 void	draw_floor(t_game *game, int x, int ray_count, int l_pixel);
 int		get_texture_color(t_game *game, int tex_y);
+void	draw_floor_ceiling(t_game *game, int ray_count, int h_pixel, int l_pixel);
 //Utils - Other
 int		key_handler(const int key, t_game *game);
 void	validate_map(t_game *g);
 int		flood_fill_cub3d(char **tab, t_game *g, t_point begin);
+//Utils - Moving
+void	look_direction(t_game *game, const bool is_left);
 
 #endif

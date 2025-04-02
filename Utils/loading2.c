@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loading2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:27:07 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:11:32 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	create_texture(t_game *game, const int index, char *path,
 	return (0);
 }
 
-static int	init_window(t_game *game)
+static void	init_window(t_game *game)
 {
 	int	i;
 
@@ -43,6 +43,8 @@ static int	init_window(t_game *game)
 	game->mlx_ptr = mlx_init();
 	game->win_ptr = NULL;
 	game->texture_img = ft_calloc(sizeof(t_text_img *), 4);
+	if (game->texture_img == NULL)
+		error_exit("Memory allocation error (texture_img)", game);
 	while (i < 4)
 	{
 		game->texture_img[i] = ft_calloc(1, sizeof(t_text_img));
@@ -80,9 +82,9 @@ static void	set_player_direction(t_game *game, t_point player)
 
 void	load_graphics(t_game *g)
 {
-	char	*line;
+	/*char	*line;
 	int		fd;
-	int		i;
+	int		i;*/
 
 	set_player_direction(g, g->map->pos_player);
 	g->ray = (t_ray *)ft_calloc(sizeof(t_ray), 1);

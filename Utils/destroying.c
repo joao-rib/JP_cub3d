@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroying.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:37:41 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:05:16 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@ static void	destroy_img(t_game *g)
 	i = 0;
 	while (i < 4)
 	{
-		free(g->texture_img[i]->img); //WIP Verificar addr (valgrind)
-		free(g->texture_img[i]);
+		if (g->texture_img[i] && g->texture_img[i]->img)
+		{
+			mlx_destroy_image(g->mlx_ptr, g->texture_img[i]->img); // Libera a imagem
+			free(g->texture_img[i]); 
+		}
+/* 			free(g->texture_img[i]->img); //WIP Verificar addr (valgrind)
+		free(g->texture_img[i]); */
 		i++;
 	}
 	free(g->texture_img);
@@ -59,11 +64,12 @@ int	destroy_game(t_game *g)
 	if (g->ray)
 		free(g->ray);
 	if (g->display)
-	{
+		free(g->display);
+/* 	{
 		if (g->display->addr)
 			free(g->display->addr);
 		free(g->display);
-	}
+	} */
 	if (g->win_ptr)
 		mlx_destroy_window(g->mlx_ptr, g->win_ptr);
 	if (g->mlx_ptr)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 16:39:03 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:32:44 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static void	calculate_lines(t_game *game)
 	game->ray->line_height = line_height;
 	game->ray->h_pixel = -line_height / 2 + HEIGHT / 2;
 	game->ray->l_pixel = line_height / 2 + HEIGHT / 2;
+/* 	game->ray->h_pixel = -line_height + HEIGHT / 2;
+	game->ray->l_pixel = line_height + HEIGHT / 2; */
 	if (game->ray->h_pixel < 0)
 		game->ray->h_pixel = 0;
 	if (game->ray->l_pixel >= HEIGHT)
@@ -120,7 +122,7 @@ int	game_frame_loop(t_game *game)
 		dda(game);
 		calculate_lines(game);
 		//draw_floor_ceiling(game, x, game->ray->h_pixel, game->ray->l_pixel);
-		draw_ceiling(game, 0, x, game->ray->h_pixel);
+		draw_ceiling(game, 0, x, game->ray->h_pixel + 100);
 		draw_floor(game, HEIGHT / 2, x, game->ray->l_pixel);
 		draw_wall(game, game->ray->h_pixel, game->ray->l_pixel, x);
 	}

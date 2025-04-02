@@ -3,9 +3,13 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror
 RM = rm -fr
 MAIN = cub3d.c
-FILES = Utils/loading.c Utils/validating.c Utils/flood_fill_cub3d.c Utils/destroying.c Utils/error_handling.c cub3d.c #Utils/keys.c Utils/utils.c
-OBJ_SRC = loading.o validating.o flood_fill_cub3d.o destroying.o error_handling.o cub3d.o #keys.o utils.o
-OBJ = obj/loading.o obj/validating.o obj/flood_fill_cub3d.o obj/destroying.o obj/error_handling.o obj/cub3d.o #obj/keys.o obj/utils.o
+FILES = Utils/loading.c Utils/loading2.c Utils/rendering.c Utils/rendering2.c Utils/rendering3.c Utils/moving.c \
+		Utils/validating.c Utils/flood_fill_cub3d.c Utils/destroying.c Utils/error_handling.c Utils/moving_screen.c \
+		cub3d.c
+OBJ_SRC = loading.o loading2.o rendering.o rendering2.o rendering3.o moving.o \
+		validating.o flood_fill_cub3d.o destroying.o error_handling.o moving_screen.o cub3d.o
+OBJ = obj/loading.o obj/loading2.o obj/rendering.o obj/rendering2.o obj/rendering3.o obj/moving.o \
+		obj/validating.o obj/flood_fill_cub3d.o obj/destroying.o obj/error_handling.o obj/moving_screen.o obj/cub3d.o
 LIBFT = ./libft
 #MINILIBX = mlx/minilibx-linux
 MINILIBX = ./include/mlx
@@ -24,7 +28,7 @@ $(NAME): $(OBJ)
 $(OBJ): $(MAIN) $(FILES)
 #	@mkdir -p mlx
 #	@tar -xzf minilibx-linux.tgz -C mlx
-#	@make -C $(MINILIBX) -s
+	@make -C $(MINILIBX) -s
 	@make $(WBLOCK) -C $(LIBFT) all
 	@mkdir -p obj
 	@$(CC) $(FLAGS) -c $(FILES)
