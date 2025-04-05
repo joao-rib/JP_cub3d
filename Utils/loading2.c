@@ -6,11 +6,18 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 19:30:30 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:10:33 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+int	count_ws(char *line, int start)
+{
+	while (ft_isdelim(line[start]))
+		start++;
+	return (start);
+}
 
 static int	create_texture(t_game *game, const int index, char *path,
 	const char *error_msg)

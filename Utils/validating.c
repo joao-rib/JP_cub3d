@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/03/31 15:48:50 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:11:21 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,17 +116,17 @@ static bool	validate_player(char **layout, t_point size)
 void	validate_map(t_game *g)
 {
 	if (g->map->map_size.y == 0)
-		error_map("Map is empty", g);
+		error_map("Map is empty", g, 0);
 	if (!validate_player(g->map->layout, g->map->map_size))
-		error_map("Map must have one player", g);
+		error_map("Map must have one player", g, 0);
 	if (!validate_chars(g))
-		error_map("Map has unknown entities", g);
+		error_map("Map has unknown entities", g, 0);
 	if (!validate_walls1(g->map->layout, g->map->map_size))
-		error_map("Map is not walled", g);
+		error_map("Map is not walled", g, 0);
 	if (!validate_walls2(g->map->layout, g->map->map_size))
-		error_map("Map is not walled", g);
+		error_map("Map is not walled", g, 0);
 	if (!flood_fill_cub3d(ft_matrix_dup(g->map->layout), g, g->map->pos_player))
-		error_map("Map is not contiguous", g);
+		error_map("Map is not contiguous", g, 0);
 	g->player.player_x = (double)g->map->pos_player.x + 0.5;
 	g->player.player_y = (double)g->map->pos_player.y + 0.5;
 }

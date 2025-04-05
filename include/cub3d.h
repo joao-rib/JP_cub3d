@@ -6,7 +6,7 @@
 /*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 19:34:19 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/05 11:46:39 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,14 @@ typedef struct s_game
 
 //Utils - Error Handling
 void	error_exit(char *msg, t_game *g);
-void	error_map(char *msg, t_game *g);
+void	error_map(char *msg, t_game *g, bool fd_error);
 //Utils - Destroying
 void	destroy_map(t_game *g);
 int		destroy_game(t_game *game);
 //Utils - Loading
 void	load_map(t_game *g, char *file);
 void	load_graphics(t_game *g);
+int		count_ws(char *line, int start);
 //Utils - Rendering
 int		game_frame_loop(t_game *game);
 void	draw_wall(t_game *game, int h_pixel, int l_pixel, int x);

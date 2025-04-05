@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/05 10:52:01 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:20:00 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ static void	dda(t_game *game)
 	wall_hit = false;
 	while (wall_hit == false)
 	{
-/* 		// Verifica se o mapa está inicializado
-		if (!game->map || !game->map->layout)
-		error_exit("Map layout is NULL", game);
-
-		// Verifica se os índices estão dentro dos limites do mapa
-		if (game->ray->map_x < 0 || game->ray->map_x >= game->map->||
-		 game->ray->map_y < 0 || game->ray->map_y >= game->map->height) */
-		 error_exit("Raycasting out of map bounds", game);
 		if (game->ray->raydist_x < game->ray->raydist_y)
 		{
 			game->ray->raydist_x += game->ray->deltadist_x;

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/03 10:33:27 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/05 12:18:11 by joao-rib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/cub3d.h"
-//TODO: Erro com file no existe, erro com texturas e cor nao existe
 
 static bool	check_file(char *path)
 {
@@ -33,7 +32,10 @@ static bool	default_colours(t_game *g)
 		g->texture.ceiling = ft_strdup("17,17,132");
 	if (!g->texture.floor)
 		g->texture.floor = ft_strdup("237,232,208");
-	if (g->texture.north)
+	if (!g->texture.north || !g->texture.south
+		|| !g->texture.west || !g->texture.east)
+		result = false;
+	if (result && g->texture.north)
 		result = check_file(g->texture.north);
 	if (result && g->texture.south)
 		result = check_file(g->texture.south);
