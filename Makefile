@@ -11,23 +11,22 @@ OBJ_SRC = loading.o loading2.o rendering.o rendering2.o rendering3.o moving.o \
 OBJ = obj/loading.o obj/loading2.o obj/rendering.o obj/rendering2.o obj/rendering3.o obj/moving.o \
 		obj/validating.o obj/flood_fill_cub3d.o obj/destroying.o obj/error_handling.o obj/moving_screen.o obj/cub3d.o
 LIBFT = ./libft
-#MINILIBX = mlx/minilibx-linux
-MINILIBX = ./include/mlx
+MINILIBX = ./include/mlx/minilibx-linux
 MLXFLAGS = -lmlx -lXext -lX11
 WBLOCK = --no-print-directory
 
 all: $(NAME)
 
-mlx:
-	git clone https://github.com/42Paris/minilibx-linux.git ./include/mlx
-	make -C ./include/mlx
+#mlx:
+#	git clone https://github.com/42Paris/minilibx-linux.git ./include/mlx
+#	make -C ./include/mlx
 
 $(NAME): $(OBJ)
 	@$(CC) $(FLAGS) $(OBJ) -L $(LIBFT) -lft -L $(MINILIBX) $(MLXFLAGS) -lm -o $(NAME)
 
 $(OBJ): $(MAIN) $(FILES)
-#	@mkdir -p mlx
-#	@tar -xzf minilibx-linux.tgz -C mlx
+	@mkdir -p include/mlx
+	@tar -xzf minilibx-linux.tgz -C include/mlx
 	@make -C $(MINILIBX) -s
 	@make $(WBLOCK) -C $(LIBFT) all
 	@mkdir -p obj
@@ -43,7 +42,7 @@ fclean:
 	@$(RM) $(OBJ) $(NAME) obj
 	@make $(WBLOCK) fclean -C $(LIBFT)
 	@make clean -C $(MINILIBX) -s
-	@$(RM) mlx
+	@$(RM) include/mlx
 
 re: fclean all
 
