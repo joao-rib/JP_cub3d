@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/02 19:29:34 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/03 14:53:07 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	draw_floor(t_game *game, int x, int ray_count, int l_pixel)
 	int				stop;
 
 	floor_rgb_set = convert_rgb(game->texture.floor);
-	stop = (HEIGHT / 2) + ((HEIGHT / 2) / 4);
+	stop = (HEIGHT / 2) + ((HEIGHT / 2) / 8);
 	while (x < HEIGHT)
 	{
 		while (x < l_pixel)
