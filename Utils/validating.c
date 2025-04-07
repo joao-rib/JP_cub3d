@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validating.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joao-rib <joao-rib@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/05 12:11:21 by joao-rib         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:57:04 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ void	validate_map(t_game *g)
 		error_map("Map is not walled", g, 0);
 	if (!flood_fill_cub3d(ft_matrix_dup(g->map->layout), g, g->map->pos_player))
 		error_map("Map is not contiguous", g, 0);
-	g->player.player_x = (double)g->map->pos_player.x + 0.5;
-	g->player.player_y = (double)g->map->pos_player.y + 0.5;
+	g->player.player_y = (double)g->map->pos_player.x + 0.5;
+	g->player.player_x = (double)g->map->pos_player.y + 0.5;
 }

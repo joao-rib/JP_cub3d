@@ -6,7 +6,7 @@
 /*   By: tbezerra <tbezerra@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 19:30:33 by joao-rib          #+#    #+#             */
-/*   Updated: 2025/04/05 16:54:45 by tbezerra         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:57:26 by tbezerra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,55 +45,6 @@ static void	calculate_lines(t_game *game)
 		game->ray->l_pixel = HEIGHT - 1;
 }
 
-void	printlayout(char **layout)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (layout[i])
-	{
-		j = 0;
-		while (layout[i][j])
-		{
-			if (layout[i][j] == ' ')
-				printf(" ");
-			else if (layout[i][j] == '0')
-				printf("0");
-			else if (layout[i][j] == 'N')
-				printf("N");
-			else if (layout[i][j] == 'S')
-				printf("S");
-			else if (layout[i][j] == 'E')
-				printf("E");
-			else if (layout[i][j] == 'W')
-				printf("W");
-			else
-				printf("1");
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
-void	print_layout_size(char **layout)
-{	
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while(layout[j])
-	{
-		while (layout[j][i])
-			i++;
-		j++;
-	}
-	printf("Layout size: %d\n", i);
-	printf("Layout rows: %d\n", j);
-}
-
 static void	dda(t_game *game)
 {
 	bool	wall_hit;
@@ -113,19 +64,6 @@ static void	dda(t_game *game)
 			game->ray->map_y += game->ray->step_y;
 			game->ray->side = true;
 		}
-		printlayout(game->map->layout);
-		print_layout_size(game->map->layout);
-		printf("Map x: %d\n", game->ray->map_x);
-		printf("Map y: %d\n", game->ray->map_y);
-		if (game->ray->map_x < 0 || game->ray->map_x >= game->map->map_size.y
-			|| game->ray->map_y < 0 || game->ray->map_y >= game->map->map_size.x)
-		{
-			wall_hit = true;
-			game->ray->distance = 1e30;
-			break ;
-		}
-		//print_layout_ray(game->map->layout, game->ray->map_x, game->ray->map_y);
-		//printf("Layout player: %c\n", game->map->layout[25][11]);
 		if (game->map->layout[game->ray->map_x][game->ray->map_y] == '1')
 			wall_hit = true;
 	}
